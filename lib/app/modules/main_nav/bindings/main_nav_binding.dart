@@ -14,9 +14,7 @@ class MainNavBinding extends Bindings {
     );
     Get.lazyPut<HomeProvider>(() => HomeProvider());
     Get.lazyPut<HomeController>(() => HomeController(Get.find()));
-
     Get.lazyPut<AttendanceController>(() => AttendanceController());
-
     Get.lazyPut<ProfileController>(() => ProfileController());
   }
 }

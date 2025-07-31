@@ -2,6 +2,8 @@ import 'package:get/get.dart';
 import 'package:snpos/app/modules/main_nav/children/attendance/bindings/attendance_binding.dart';
 import 'package:snpos/app/modules/main_nav/children/attendance/views/attendance_view.dart';
 import 'package:snpos/app/modules/main_nav/children/home/bindings/home_binding.dart';
+import 'package:snpos/app/modules/main_nav/children/home/children/transaction_success/bindings/transaction_success_binding.dart';
+import 'package:snpos/app/modules/main_nav/children/home/children/transaction_success/views/transaction_success_view.dart';
 import 'package:snpos/app/modules/main_nav/children/home/views/home_view.dart';
 import 'package:snpos/app/modules/main_nav/children/profile/bindings/profile_binding.dart';
 import 'package:snpos/app/modules/main_nav/children/profile/views/profile_view.dart';
@@ -20,8 +22,6 @@ import '../modules/main_nav/bindings/main_nav_binding.dart';
 import '../modules/main_nav/views/main_nav_view.dart';
 import '../modules/sales_report/bindings/sales_report_binding.dart';
 import '../modules/sales_report/views/sales_report_view.dart';
-import '../modules/transaction_success/bindings/transaction_success_binding.dart';
-import '../modules/transaction_success/views/transaction_success_view.dart';
 
 part 'app_routes.dart';
 
@@ -65,11 +65,6 @@ class AppPages {
       binding: CheckoutBinding(),
     ),
     GetPage(
-      name: _Paths.TRANSACTION_SUCCESS,
-      page: () => const TransactionSuccessView(),
-      binding: TransactionSuccessBinding(),
-    ),
-    GetPage(
       name: _Paths.MAIN_NAV,
       page: () => const MainNavView(),
       binding: MainNavBinding(),
@@ -78,6 +73,13 @@ class AppPages {
           name: _Paths.HOME,
           page: () => const HomeView(),
           binding: HomeBinding(),
+          children: [
+            GetPage(
+              name: _Paths.TRANSACTION_SUCCESS,
+              page: () => const TransactionSuccessView(),
+              binding: TransactionSuccessBinding(),
+            ),
+          ]
         ),
         GetPage(
           name: _Paths.ATTENDANCE,

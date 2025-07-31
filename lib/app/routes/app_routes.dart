@@ -11,11 +11,12 @@ abstract class Routes {
   static const ATTENDANCE = '$MAIN_NAV${_Paths.ATTENDANCE}';
   static const PROFILE = '$MAIN_NAV${_Paths.PROFILE}';
 
+  static const TRANSACTION_SUCCESS = '$HOME${_Paths.TRANSACTION_SUCCESS}';
+
   static const SALES_REPORT = _Paths.SALES_REPORT;
   static const ATTENDANCE_REPORT = _Paths.ATTENDANCE_REPORT;
   static const DEPOSIT_REPORT = _Paths.DEPOSIT_REPORT;
   static const CHECKOUT = _Paths.CHECKOUT;
-  static const TRANSACTION_SUCCESS = _Paths.TRANSACTION_SUCCESS;
 }
 
 abstract class _Paths {

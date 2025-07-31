@@ -79,4 +79,14 @@ class HomeProvider extends GetConnect {
     );
   }
 
+  Future<Response> sendListProducts(transaction, item) async {
+    await Future.delayed(const Duration(seconds: 1));
+    return Response(
+        statusCode: 200,
+        body: {
+          'message': 'success',
+        }
+    );
+  }
+
 }
