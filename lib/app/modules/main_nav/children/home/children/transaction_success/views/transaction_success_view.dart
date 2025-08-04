@@ -3,6 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:snpos/app/routes/app_pages.dart';
+import 'package:snpos/app/utils/currency_formatter.dart';
+import 'package:snpos/app/utils/currency_formatter.dart';
+import 'package:snpos/app/utils/currency_formatter.dart';
+import 'package:snpos/app/utils/currency_formatter.dart';
 
 import '../controllers/transaction_success_controller.dart';
 
@@ -94,7 +98,7 @@ class TransactionSuccessView extends GetView<TransactionSuccessController> {
                                     ),
                                   ),
                                 ),
-                                Text(controller.formatRupiah(subtotal)),
+                                Text(CurrencyFormatter.toRupiah(subtotal)),
                               ],
                             ),
                           );
@@ -105,21 +109,21 @@ class TransactionSuccessView extends GetView<TransactionSuccessController> {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             const Text('Total:', style: TextStyle(fontWeight: FontWeight.bold)),
-                            Text(controller.formatRupiah(controller.total), style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16)),
+                            Text(CurrencyFormatter.toRupiah(controller.total), style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16)),
                           ],
                         ),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             const Text('Dibayarkan :', style: TextStyle(fontWeight: FontWeight.bold)),
-                            Text(controller.formatRupiah(controller.paid), style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16)),
+                            Text(CurrencyFormatter.toRupiah(controller.paid), style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16)),
                           ],
                         ),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             const Text('Kembalian:', style: TextStyle(fontWeight: FontWeight.bold)),
-                             Text(controller.formatRupiah(controller.paid - controller.total), style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16)),
+                             Text(CurrencyFormatter.toRupiah(controller.paid - controller.total), style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16)),
                           ],
                         ),
                       ],

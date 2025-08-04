@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
 import 'package:snpos/app/routes/app_pages.dart';
-import 'package:snpos/app/widgets/primary_button_widget.dart';
 
 import '../controllers/landing_controller.dart';
 

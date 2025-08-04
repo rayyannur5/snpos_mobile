@@ -2,7 +2,10 @@ import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:snpos/app/enums/absen_status.dart';
 import 'package:snpos/app/modules/main_nav/children/home/views/not_absen_yet_view.dart';
+import 'package:snpos/app/utils/currency_formatter.dart';
+import 'package:snpos/app/utils/currency_formatter.dart';
 import 'package:snpos/app/widgets/circular_spinner_with_text.dart';
 
 import '../controllers/home_controller.dart';
@@ -21,7 +24,6 @@ class HomeView extends GetView<HomeController> {
     return Scaffold(
       appBar: AppBar(
           title: Text('Katalog', style: Get.textTheme.headlineLarge),
-
           toolbarHeight: 80,
         actions: [
           Obx(
@@ -58,7 +60,7 @@ class HomeView extends GetView<HomeController> {
                   onPressed: controller.bottomSheetCheckout,
                   icon: Icon(Icons.shopping_cart),
                   label: Text(
-                    controller.formatRupiah(controller.totalPrice),
+                    CurrencyFormatter.toRupiah(controller.totalPrice),
                     style: GoogleFonts.plusJakartaSans(fontWeight: FontWeight.w800, fontSize: 16),
                   ),
                 );
@@ -73,7 +75,7 @@ class HomeView extends GetView<HomeController> {
         if (controller.isLoading.value) {
           return const Center(child: CircularProgressIndicator());
         }
-        if (controller.isAbsenToday.value) {
+        if (controller.absenStatus.value == AbsenStatus.IsAbsen) {
           return RefreshIndicator(
             onRefresh: () => controller.fetchListProducts(),
             child: ListView.builder(itemCount: controller.products.length, itemBuilder: (context, index) => productItem(index)),
@@ -118,7 +120,7 @@ class HomeView extends GetView<HomeController> {
                       children: [
                         Text(controller.products[index]['name'], style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16)),
                         SizedBox(height: 4),
-                        Text(controller.formatRupiah(controller.products[index]['price']), style: TextStyle(fontSize: 14, color: Colors.black87)),
+                        Text(CurrencyFormatter.toRupiah(controller.products[index]['price']), style: TextStyle(fontSize: 14, color: Colors.black87)),
                       ],
                     ),
                   ),

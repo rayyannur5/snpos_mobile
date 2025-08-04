@@ -12,8 +12,8 @@ class HomeProvider extends GetConnect {
     return Response(
       statusCode: 200,
       body: {
-        'message': 'success',
-        'data': true
+        'message': 'Not Absen Yet',
+        'data': 'Y'
       },
     );
   }

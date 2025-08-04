@@ -13,8 +13,12 @@ void main() {
       title: "Application",
       theme: ThemeData(
         textTheme: GoogleFonts.plusJakartaSansTextTheme(),
+        scaffoldBackgroundColor: Color(0xffF2F4F7),
+        appBarTheme: AppBarTheme(
+          color: Color(0xffF2F4F7)
+        ),
         colorScheme: ColorScheme.fromSeed(
-          seedColor: Color(0xFF4D81F1), // warna utama (primary)
+          seedColor: Color(0xFF4D81F1),
           primary: Color(0xFF4D81F1),
           secondary: Colors.orange,
         ),

@@ -32,6 +32,7 @@ class MainNavView extends GetView<MainNavController> {
           ),
           floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
           bottomNavigationBar: BottomAppBar(
+            color: Colors.white,
             shape: const CircularNotchedRectangle(),
             notchMargin: 15,
             child: SizedBox(

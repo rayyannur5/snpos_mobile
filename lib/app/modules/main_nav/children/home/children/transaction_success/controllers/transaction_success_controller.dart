@@ -39,10 +39,4 @@ class TransactionSuccessController extends GetxController {
     showCheckIcon.value = true;
   }
 
-  String formatRupiah(dynamic number) {
-    final formatter = NumberFormat.currency(locale: 'id_ID', symbol: 'Rp ', decimalDigits: 0);
-    return formatter.format(number);
-  }
-
-
 }

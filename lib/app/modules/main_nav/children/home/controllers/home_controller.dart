@@ -3,14 +3,16 @@ import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:snpos/app/data/providers/db_helper.dart';
+import 'package:snpos/app/enums/absen_status.dart';
 import 'package:snpos/app/modules/main_nav/children/home/providers/home_provider.dart';
 import 'package:snpos/app/routes/app_pages.dart';
+import 'package:snpos/app/utils/currency_formatter.dart';
 
 class HomeController extends GetxController {
   final HomeProvider provider;
   HomeController(this.provider);
 
-  var isAbsenToday = false.obs;
+  var absenStatus = AbsenStatus.IsNotAbsen.obs;
   var isLoading = true.obs;
   var products = [].obs;
   var pendingTransactions = [].obs;
@@ -55,7 +57,15 @@ class HomeController extends GetxController {
 
       final response = await provider.getAbsenStatus();
       if (response.statusCode == 200) {
-        isAbsenToday.value = response.body['data'] ?? false;
+        if (response.body['data'] == 'Y') {
+          absenStatus.value = AbsenStatus.IsAbsen;
+        } else if (response.body['data'] == 'N') {
+          absenStatus.value = AbsenStatus.IsNotAbsen;
+        } else if (response.body['data'] == 'X') {
+          absenStatus.value = AbsenStatus.AfterAbsen;
+        } else {
+          absenStatus.value = AbsenStatus.IsNotAbsen;
+        }
         fetchListProducts();
       } else {
         Get.snackbar('Error', 'Gagal ambil data');
@@ -81,11 +91,6 @@ class HomeController extends GetxController {
     } finally {
       isLoading.value = false;
     }
-  }
-
-  String formatRupiah(dynamic number) {
-    final formatter = NumberFormat.currency(locale: 'id_ID', symbol: 'Rp ', decimalDigits: 0);
-    return formatter.format(number);
   }
 
   void addProduct(product) {
@@ -153,7 +158,7 @@ class HomeController extends GetxController {
                         ),
                       ),
                     ),
-                    Text(formatRupiah(subtotal)),
+                    Text(CurrencyFormatter.toRupiah(subtotal)),
                   ],
                 ),
               );
@@ -163,7 +168,7 @@ class HomeController extends GetxController {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 const Text('Total:', style: TextStyle(fontWeight: FontWeight.bold)),
-                Text(formatRupiah(totalPrice), style: const TextStyle(fontWeight: FontWeight.bold)),
+                Text(CurrencyFormatter.toRupiah(totalPrice), style: const TextStyle(fontWeight: FontWeight.bold)),
               ],
             ),
             Row(
@@ -173,7 +178,7 @@ class HomeController extends GetxController {
                 Obx( () {
                   final cash = int.tryParse(cashText.value.replaceAll('.', '')) ?? 0;
                   final kembalian = cash - totalPrice;
-                    return Text(formatRupiah(kembalian), style: const TextStyle(fontWeight: FontWeight.bold));
+                    return Text(CurrencyFormatter.toRupiah(kembalian), style: const TextStyle(fontWeight: FontWeight.bold));
                   }
                 ),
               ],
@@ -208,14 +213,14 @@ class HomeController extends GetxController {
                     cashController.text = 5000.toString();
                     cashText.value = cashController.text;
                   },
-                  child: Text(formatRupiah(5000)),
+                  child: Text(CurrencyFormatter.toRupiah(5000)),
                 ),
                 ElevatedButton(
                   onPressed: () {
                     cashController.text = 10000.toString();
                     cashText.value = cashController.text;
                   },
-                  child: Text(formatRupiah(10000)),
+                  child: Text(CurrencyFormatter.toRupiah(10000)),
                 ),
               ],
             ),
@@ -227,14 +232,14 @@ class HomeController extends GetxController {
                     cashController.text = 20000.toString();
                     cashText.value = cashController.text;
                   },
-                  child: Text(formatRupiah(20000)),
+                  child: Text(CurrencyFormatter.toRupiah(20000)),
                 ),
                 ElevatedButton(
                   onPressed: () {
                     cashController.text = 50000.toString();
                     cashText.value = cashController.text;
                   },
-                  child: Text(formatRupiah(50000)),
+                  child: Text(CurrencyFormatter.toRupiah(50000)),
                 ),
               ],
             ),
@@ -298,7 +303,7 @@ class HomeController extends GetxController {
         width: Get.width,
         padding: EdgeInsets.all(20),
         decoration: BoxDecoration(
-          color: Color(0xFFF2F4F7),
+          color: Get.theme.scaffoldBackgroundColor,
             borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
         ),
         child: Column(

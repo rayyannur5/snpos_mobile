@@ -13,10 +13,15 @@ abstract class Routes {
 
   static const TRANSACTION_SUCCESS = '$HOME${_Paths.TRANSACTION_SUCCESS}';
 
+  static const ATTENDANCE_CAMERA = ATTENDANCE + _Paths.ATTENDANCE_CAMERA;
+  static const ATTENDANCE_TRANSACTION = ATTENDANCE + _Paths.ATTENDANCE_TRANSACTION;
+
+  static const CREATE_DEPOSIT = ATTENDANCE + _Paths.CREATE_DEPOSIT;
+
   static const SALES_REPORT = _Paths.SALES_REPORT;
   static const ATTENDANCE_REPORT = _Paths.ATTENDANCE_REPORT;
   static const DEPOSIT_REPORT = _Paths.DEPOSIT_REPORT;
-  static const CHECKOUT = _Paths.CHECKOUT;
+
 }
 
 abstract class _Paths {
@@ -29,7 +34,9 @@ abstract class _Paths {
   static const SALES_REPORT = '/sales-report';
   static const ATTENDANCE_REPORT = '/attendance-report';
   static const DEPOSIT_REPORT = '/deposit-report';
-  static const CHECKOUT = '/checkout';
   static const TRANSACTION_SUCCESS = '/transaction-success';
   static const MAIN_NAV = '/main-nav';
+  static const ATTENDANCE_CAMERA = '/attendance-camera';
+  static const ATTENDANCE_TRANSACTION = '/attendance-transaction';
+  static const CREATE_DEPOSIT = '/create-deposit';
 }
