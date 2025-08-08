@@ -1,11 +1,7 @@
 import 'package:get/get.dart';
-import 'package:snpos/app/modules/main_nav/children/attendance/children/create_deposit/bindings/create_deposit_binding.dart';
-import 'package:snpos/app/modules/main_nav/children/attendance/children/create_deposit/views/create_deposit_view.dart';
+import 'package:snpos/app/modules/main_nav/children/profile/children/change_password/bindings/change_password_binding.dart';
+import 'package:snpos/app/modules/main_nav/children/profile/children/change_password/views/change_password_view.dart';
 
-import '../modules/attendance_report/bindings/attendance_report_binding.dart';
-import '../modules/attendance_report/views/attendance_report_view.dart';
-import '../modules/deposit_report/bindings/deposit_report_binding.dart';
-import '../modules/deposit_report/views/deposit_report_view.dart';
 import '../modules/landing/bindings/landing_binding.dart';
 import '../modules/landing/views/landing_view.dart';
 import '../modules/login/bindings/login_binding.dart';
@@ -16,16 +12,24 @@ import '../modules/main_nav/children/attendance/children/attendance_camera/bindi
 import '../modules/main_nav/children/attendance/children/attendance_camera/views/attendance_camera_view.dart';
 import '../modules/main_nav/children/attendance/children/attendance_transaction/bindings/attendance_transaction_binding.dart';
 import '../modules/main_nav/children/attendance/children/attendance_transaction/views/attendance_transaction_view.dart';
+import '../modules/main_nav/children/attendance/children/create_deposit/bindings/create_deposit_binding.dart';
+import '../modules/main_nav/children/attendance/children/create_deposit/views/create_deposit_view.dart';
 import '../modules/main_nav/children/attendance/views/attendance_view.dart';
 import '../modules/main_nav/children/home/bindings/home_binding.dart';
 import '../modules/main_nav/children/home/children/transaction_success/bindings/transaction_success_binding.dart';
 import '../modules/main_nav/children/home/children/transaction_success/views/transaction_success_view.dart';
 import '../modules/main_nav/children/home/views/home_view.dart';
 import '../modules/main_nav/children/profile/bindings/profile_binding.dart';
+import '../modules/main_nav/children/profile/children/attendance_report/bindings/attendance_report_binding.dart';
+import '../modules/main_nav/children/profile/children/attendance_report/views/attendance_report_view.dart';
+import '../modules/main_nav/children/profile/children/deposit_report/bindings/deposit_report_binding.dart';
+import '../modules/main_nav/children/profile/children/deposit_report/views/deposit_report_view.dart';
+import '../modules/main_nav/children/profile/children/sales_report/bindings/sales_report_binding.dart';
+import '../modules/main_nav/children/profile/children/sales_report/views/sales_report_view.dart';
+import '../modules/main_nav/children/profile/children/schedule_information/bindings/schedule_information_binding.dart';
+import '../modules/main_nav/children/profile/children/schedule_information/views/schedule_information_view.dart';
 import '../modules/main_nav/children/profile/views/profile_view.dart';
 import '../modules/main_nav/views/main_nav_view.dart';
-import '../modules/sales_report/bindings/sales_report_binding.dart';
-import '../modules/sales_report/views/sales_report_view.dart';
 
 part 'app_routes.dart';
 
@@ -44,21 +48,6 @@ class AppPages {
       name: _Paths.LOGIN,
       page: () => const LoginView(),
       binding: LoginBinding(),
-    ),
-    GetPage(
-      name: _Paths.SALES_REPORT,
-      page: () => const SalesReportView(),
-      binding: SalesReportBinding(),
-    ),
-    GetPage(
-      name: _Paths.ATTENDANCE_REPORT,
-      page: () => const AttendanceReportView(),
-      binding: AttendanceReportBinding(),
-    ),
-    GetPage(
-      name: _Paths.DEPOSIT_REPORT,
-      page: () => const DepositReportView(),
-      binding: DepositReportBinding(),
     ),
     GetPage(
         name: _Paths.MAIN_NAV,
@@ -99,10 +88,37 @@ class AppPages {
             ],
           ),
           GetPage(
-            name: _Paths.PROFILE,
-            page: () => const ProfileView(),
-            binding: ProfileBinding(),
-          ),
+              name: _Paths.PROFILE,
+              page: () => const ProfileView(),
+              binding: ProfileBinding(),
+              children: [
+                GetPage(
+                  name: _Paths.SALES_REPORT,
+                  page: () => const SalesReportView(),
+                  binding: SalesReportBinding(),
+                ),
+                GetPage(
+                  name: _Paths.ATTENDANCE_REPORT,
+                  page: () => const AttendanceReportView(),
+                  binding: AttendanceReportBinding(),
+                ),
+                GetPage(
+                  name: _Paths.DEPOSIT_REPORT,
+                  page: () => const DepositReportView(),
+                  binding: DepositReportBinding(),
+                ),
+                GetPage(
+                  name: _Paths.SCHEDULE_INFORMATION,
+                  page: () => const ScheduleInformationView(),
+                  binding: ScheduleInformationBinding(),
+                ),
+                GetPage(
+                  name: _Paths.CHANGE_PASSWORD,
+                  page: () => const ChangePasswordView(),
+                  binding: ChangePasswordBinding(),
+                ),
+              ]),
         ]),
+
   ];
 }

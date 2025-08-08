@@ -3,20 +3,12 @@ import 'package:get/get.dart';
 class HomeProvider extends GetConnect {
   @override
   void onInit() {
-    httpClient.baseUrl = 'YOUR-API-URL';
+    httpClient.baseUrl = 'http://10.0.2.2:8000/api';
+    httpClient.defaultContentType = 'application/json';
+    httpClient.timeout = const Duration(seconds: 10);
   }
 
-  // Future<Response> getAbsenStatus() => get('/absensi/status');
-  Future<Response> getAbsenStatus() async {
-    await Future.delayed(const Duration(seconds: 1));
-    return Response(
-      statusCode: 200,
-      body: {
-        'message': 'Not Absen Yet',
-        'data': 'Y'
-      },
-    );
-  }
+  Future<Response> updateUserData(String token) => get('/attendance', headers: {'Authorization': 'Bearer $token', 'Accept': 'application/json'});
 
   Future<Response> getListProducts() async {
     await Future.delayed(const Duration(seconds: 1));

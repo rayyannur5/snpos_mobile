@@ -9,7 +9,7 @@ class BeforeAbsenView extends GetView<AttendanceController> {
   @override
   Widget build(BuildContext context) {
     return RefreshIndicator(
-      onRefresh: () => controller.fetchAbsenStatus(),
+      onRefresh: controller.refreshPage,
       child: ListView(
         children: [
           Padding(

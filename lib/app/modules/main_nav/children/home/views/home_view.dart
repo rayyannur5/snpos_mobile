@@ -77,7 +77,7 @@ class HomeView extends GetView<HomeController> {
         }
         if (controller.absenStatus.value == AbsenStatus.IsAbsen) {
           return RefreshIndicator(
-            onRefresh: () => controller.fetchListProducts(),
+            onRefresh: controller.refreshPage,
             child: ListView.builder(itemCount: controller.products.length, itemBuilder: (context, index) => productItem(index)),
           );
         } else {

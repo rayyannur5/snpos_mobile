@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:snpos/app/modules/main_nav/children/attendance/controllers/attendance_controller.dart';
+import 'package:snpos/app/routes/app_pages.dart';
 import 'package:snpos/app/utils/currency_formatter.dart';
 import 'package:snpos/app/widgets/attendance_item_widget.dart';
 
@@ -10,7 +11,7 @@ class AbsenView extends GetView<AttendanceController> {
   @override
   Widget build(BuildContext context) {
     return RefreshIndicator(
-      onRefresh: () => controller.fetchAbsenStatus(),
+      onRefresh: controller.refreshPage,
       child: Padding(
         padding: const EdgeInsets.all(20.0),
         child: ListView(
@@ -24,14 +25,13 @@ class AbsenView extends GetView<AttendanceController> {
                 SizedBox(height: 20),
                 SizedBox(
                   width: Get.width,
-                  child: FilledButton(onPressed: () {
-                  }, child: Text('Absen Keluar')),
+                  child: FilledButton(onPressed: () => Get.toNamed(Routes.ATTENDANCE_CAMERA), child: Text('Absen Keluar')),
                 )
               ],
             ),
 
             const SizedBox(height: 20),
-            AttendanceItemWidget()
+            AttendanceItemWidget(dateIn: DateTime.now(), dateOut: DateTime.now(), isDeposit: true, isLate: false, outlet: 'Tanggulangin',omset: 600000,shift: 'Shift 1',)
           ],
         ),
       ),

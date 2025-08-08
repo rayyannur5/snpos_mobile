@@ -6,7 +6,7 @@ class DepositReportBinding extends Bindings {
   @override
   void dependencies() {
     Get.lazyPut<DepositReportController>(
-      () => DepositReportController(),
+      () => DepositReportController(Get.find()),
     );
   }
 }

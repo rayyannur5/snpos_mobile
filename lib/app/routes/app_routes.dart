@@ -18,10 +18,11 @@ abstract class Routes {
 
   static const CREATE_DEPOSIT = ATTENDANCE + _Paths.CREATE_DEPOSIT;
 
-  static const SALES_REPORT = _Paths.SALES_REPORT;
-  static const ATTENDANCE_REPORT = _Paths.ATTENDANCE_REPORT;
-  static const DEPOSIT_REPORT = _Paths.DEPOSIT_REPORT;
-
+  static const SALES_REPORT = PROFILE + _Paths.SALES_REPORT;
+  static const ATTENDANCE_REPORT = PROFILE + _Paths.ATTENDANCE_REPORT;
+  static const DEPOSIT_REPORT = PROFILE + _Paths.DEPOSIT_REPORT;
+  static const SCHEDULE_INFORMATION = PROFILE + _Paths.SCHEDULE_INFORMATION;
+  static const CHANGE_PASSWORD = PROFILE + _Paths.CHANGE_PASSWORD;
 }
 
 abstract class _Paths {
@@ -39,4 +40,6 @@ abstract class _Paths {
   static const ATTENDANCE_CAMERA = '/attendance-camera';
   static const ATTENDANCE_TRANSACTION = '/attendance-transaction';
   static const CREATE_DEPOSIT = '/create-deposit';
+  static const SCHEDULE_INFORMATION = '/schedule-information';
+  static const CHANGE_PASSWORD = '/change-password';
 }

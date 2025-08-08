@@ -1,11 +1,27 @@
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
+import 'package:snpos/app/modules/main_nav/children/profile/providers/profile_provider.dart';
+import 'package:snpos/app/routes/app_pages.dart';
 
 class ProfileController extends GetxController {
-  //TODO: Implement ProfileController
+  final box = GetStorage();
 
-  final count = 0.obs;
+  final ProfileProvider provider;
+  ProfileController(this.provider);
+
+  var isLoading = false.obs;
+
+  var token = ''.obs;
+  var user = {}.obs;
+
   @override
   void onInit() {
+    final storedToken = box.read('token');
+    if (storedToken != null) {
+      token.value = storedToken;
+      user.value = box.read('user');
+    }
     super.onInit();
   }
 
@@ -19,5 +35,37 @@ class ProfileController extends GetxController {
     super.onClose();
   }
 
-  void increment() => count.value++;
+  void dialogLogout()  {
+    Get.dialog(
+      AlertDialog(
+        title: Text('Logout'),
+        content: Text('Apakah Anda yakin ingin logout?'),
+        actions: [
+          TextButton(onPressed: () => Get.back(), child: Text('Tidak')),
+          TextButton(onPressed: () => logout(), child: Text('Ya')),
+        ],
+      )
+    );
+  }
+
+  Future<void> logout() async {
+
+    Get.dialog(
+      Center(child: CircularProgressIndicator()),
+      barrierDismissible: false,
+    );
+
+    var response = await provider.logout(token.value);
+    if(response.statusCode == 200) {
+      box.remove('token');
+      Get.snackbar('Berhasil Logout', '', backgroundColor: Colors.green, colorText: Colors.white);
+      await Future.delayed(Duration(milliseconds: 500));
+      Get.offAllNamed(Routes.LANDING);
+    } else {
+      Get.back();
+      await Future.delayed(Duration(milliseconds: 500));
+      Get.snackbar('Gagal Logout', response.body['message'], backgroundColor: Colors.red, colorText: Colors.white);
+    }
+  }
+
 }

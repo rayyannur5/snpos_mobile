@@ -1,89 +1,56 @@
+import 'dart:io';
+
 import 'package:get/get.dart';
 
 class AttendanceProvider extends GetConnect {
   @override
   void onInit() {
-    httpClient.baseUrl = 'YOUR-API-URL';
+    httpClient.baseUrl = 'http://10.0.2.2:8000/api';
+    httpClient.defaultContentType = 'application/json';
+    httpClient.timeout = const Duration(seconds: 10);
   }
 
-  Future<Response> getAbsenStatus() async {
-    await Future.delayed(const Duration(seconds: 1));
-    return Response(
-      statusCode: 200,
-      body: {
-        'message': 'Sudah Absen',
-        'data': 'N'
-      },
-    );
+  Future<Response> fetchSchedule(String token) {
+    return get('/attendance/schedule', headers: {'Authorization': 'Bearer $token'});
   }
 
-  Future<Response> getShifts() async {
-    await Future.delayed(const Duration(seconds: 1));
-    return Response(
-      statusCode: 200,
-      body: {
-        'message': 'success',
-        'data': [
-          {
-            'id' : 1,
-            'name' : 'Shift 1'
-          },
-          {
-            'id' : 2,
-            'name' : 'Shift 2'
-          },
-          {
-            'id' : 3,
-            'name' : 'Shift 3'
-          },
-        ]
-      },
-    );
+  Future<Response> updateUserData(String token) => get('/attendance', headers: {'Authorization': 'Bearer $token', 'Accept': 'application/json'});
+
+  Future<Response> sendAttendance({scheduleId, latitude, longitude, namedLocation, path, token}) async {
+    final imageFile = File(path); // ambil file dari path
+    final fileName = imageFile.path.split('/').last; // nama file
+
+    final form = FormData({
+      'scheduleId': scheduleId,
+      'latitude': latitude,
+      'longitude': longitude,
+      'namedLocation': namedLocation,
+      'photo': MultipartFile(
+        imageFile,
+        filename: fileName,
+      ),
+    });
+
+    return post('/attendance',  form, headers: { 'Authorization': 'Bearer $token', 'Accept': 'application/json' } );
+
   }
 
-  Future<Response> getOutlets() async {
-    await Future.delayed(const Duration(seconds: 1));
-    return Response(
-      statusCode: 200,
-      body: {
-        'message': 'success',
-        'data': [
-          {
-            "id": 1,
-            "area_id": 1,
-            "name": "KETINTANG",
-            "description": "Jalan Ketintang M",
-            "active": 1,
-            "latitude": -7.311411,
-            "longitude": 112.724059,
-            "created_at": "2025-07-28 19:57",
-            "updated_at": "2025-07-28 20:49"
-          },
-          {
-            "id": 2,
-            "area_id": 2,
-            "name": "TROPODO",
-            "description": null,
-            "active": 1,
-            "latitude": -7.368702,
-            "longitude": 112.763632,
-            "created_at": "2025-07-29 08:21",
-            "updated_at": "2025-07-29 08:21"
-          }
-        ]
-      },
-    );
-  }
+  Future<Response> sendExitAttendance({attendanceId, latitude, longitude, namedLocation, path, token}) async {
+    final imageFile = File(path); // ambil file dari path
+    final fileName = imageFile.path.split('/').last; // nama file
 
-  Future<Response> sendAttendance({outletId, shiftId, latitude, longitude, namedLocation, path}) async {
-    await Future.delayed(const Duration(seconds: 1));
-    return Response(
-      statusCode: 200,
-      body: {
-        'message': 'success',
-        'data' : []
-      }
-    );
+    final form = FormData({
+      'attendanceId': attendanceId,
+      'latitude': latitude,
+      'longitude': longitude,
+      'namedLocation': namedLocation,
+      'photo': MultipartFile(
+        imageFile,
+        filename: fileName,
+      ),
+    });
+
+    return post('/attendance/exit',  form, headers: { 'Authorization': 'Bearer $token', 'Accept': 'application/json' } );
 
   }
 

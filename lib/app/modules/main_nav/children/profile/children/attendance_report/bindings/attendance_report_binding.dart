@@ -6,7 +6,7 @@ class AttendanceReportBinding extends Bindings {
   @override
   void dependencies() {
     Get.lazyPut<AttendanceReportController>(
-      () => AttendanceReportController(),
+      () => AttendanceReportController(Get.find()),
     );
   }
 }

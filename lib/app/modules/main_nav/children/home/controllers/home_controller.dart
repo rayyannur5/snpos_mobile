@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:intl/intl.dart';
 import 'package:snpos/app/data/providers/db_helper.dart';
 import 'package:snpos/app/enums/absen_status.dart';
@@ -10,10 +11,13 @@ import 'package:snpos/app/utils/currency_formatter.dart';
 
 class HomeController extends GetxController {
   final HomeProvider provider;
+
   HomeController(this.provider);
 
+  final box = GetStorage();
+
   var absenStatus = AbsenStatus.IsNotAbsen.obs;
-  var isLoading = true.obs;
+  var isLoading = false.obs;
   var products = [].obs;
   var pendingTransactions = [].obs;
 
@@ -22,17 +26,18 @@ class HomeController extends GetxController {
   @override
   void onInit() {
     super.onInit();
-    fetchAbsenStatus();
+
+    refreshPage();
 
     DBHelper.getAllTransactions().then((value) async {
       pendingTransactions.value = value;
       print(value);
 
-      for(var element in pendingTransactions) {
+      for (var element in pendingTransactions) {
         var items = DBHelper.getItemTransaction(element['code']);
         Response response = await provider.sendListProducts(element, items);
         print("${DateTime.now()} delete ${element['code']}");
-        if(response.statusCode == 200) {
+        if (response.statusCode == 200) {
           await DBHelper.deleteTransactions(element['code']);
           pendingTransactions.value = await DBHelper.getAllTransactions();
         }
@@ -49,32 +54,6 @@ class HomeController extends GetxController {
   @override
   void onClose() {
     super.onClose();
-  }
-
-  Future<void> fetchAbsenStatus() async {
-    try {
-      isLoading.value = true;
-
-      final response = await provider.getAbsenStatus();
-      if (response.statusCode == 200) {
-        if (response.body['data'] == 'Y') {
-          absenStatus.value = AbsenStatus.IsAbsen;
-        } else if (response.body['data'] == 'N') {
-          absenStatus.value = AbsenStatus.IsNotAbsen;
-        } else if (response.body['data'] == 'X') {
-          absenStatus.value = AbsenStatus.AfterAbsen;
-        } else {
-          absenStatus.value = AbsenStatus.IsNotAbsen;
-        }
-        fetchListProducts();
-      } else {
-        Get.snackbar('Error', 'Gagal ambil data');
-        isLoading.value = false;
-      }
-    } catch (e) {
-      Get.snackbar('Error', 'Terjadi kesalahan');
-      isLoading.value = false;
-    }
   }
 
   Future<void> fetchListProducts() async {
@@ -349,6 +328,30 @@ class HomeController extends GetxController {
         ),
       )
     );
+  }
+
+  Future<void> refreshPage() async {
+    isLoading.value = true;
+    var response = await provider.updateUserData(box.read('token'));
+    isLoading.value = false;
+    if(response.statusCode == 200) {
+      var user = response.body['data'];
+      box.write('user', user);
+
+      if (user['is_absen'] == 'Y') {
+        absenStatus.value = AbsenStatus.IsAbsen;
+      } else if (user['is_absen'] == 'N') {
+        absenStatus.value = AbsenStatus.IsNotAbsen;
+      } else if (user['is_absen'] == 'X') {
+        absenStatus.value = AbsenStatus.AfterAbsen;
+      }
+    } else {
+      Get.snackbar('Gagal mengambil data', response.body['message'], backgroundColor: Colors.red, colorText: Colors.white);
+    }
+
+
+    await fetchListProducts();
+
   }
 
 }

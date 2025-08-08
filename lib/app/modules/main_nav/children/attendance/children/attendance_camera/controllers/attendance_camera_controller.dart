@@ -64,6 +64,7 @@ class AttendanceCameraController extends GetxController {
       isLoading.value = true;
 
       Position? position = await getCurrentLocation();
+      print(position);
 
       if(position == null) {
         isLoading.value = false;
@@ -84,7 +85,7 @@ class AttendanceCameraController extends GetxController {
         colorText: Colors.white,
       );
 
-      Get.toNamed(
+      Get.offNamed(
           Routes.ATTENDANCE_TRANSACTION,
           arguments: {
               'pathFile' : savedFile.path,

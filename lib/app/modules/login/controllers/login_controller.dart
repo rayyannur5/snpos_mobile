@@ -1,9 +1,24 @@
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
+import 'package:snpos/app/modules/login/providers/login_provider.dart';
+import 'package:snpos/app/routes/app_pages.dart';
 
 class LoginController extends GetxController {
-  //TODO: Implement LoginController
+  final LoginProvider provider;
+  LoginController(this.provider);
+  final box = GetStorage();
 
-  final count = 0.obs;
+  final formKey = GlobalKey<FormState>();
+
+  var hidden_password = true.obs;
+
+  final TextEditingController username = TextEditingController();
+  final TextEditingController password = TextEditingController();
+
+  var buttonLoading = false.obs;
+
   @override
   void onInit() {
     super.onInit();
@@ -19,5 +34,25 @@ class LoginController extends GetxController {
     super.onClose();
   }
 
-  void increment() => count.value++;
+  void showPassword() {
+    hidden_password.value = !hidden_password.value;
+  }
+
+  void login() async {
+    if(formKey.currentState!.validate()) {
+      buttonLoading.value = true;
+      final response = await provider.login(username.text, password.text);
+      buttonLoading.value = false;
+      print(response.body);
+
+      if(response.statusCode == 200) {
+        box.write('token', response.body['token']);
+        box.write('user', response.body['user']);
+        Get.offAllNamed(Routes.MAIN_NAV);
+      } else {
+        Get.snackbar('Error login', response.body['message'], backgroundColor: Colors.red, colorText: Colors.white);
+      }
+    }
+  }
+
 }
