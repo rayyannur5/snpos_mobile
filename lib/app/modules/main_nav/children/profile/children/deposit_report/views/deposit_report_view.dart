@@ -29,7 +29,7 @@ class DepositReportView extends GetView<DepositReportController> {
                       child: Text(CurrencyFormatter.toRupiah(600000), style: Get.textTheme.bodyMedium?.copyWith(color: Colors.transparent))
                     );
                   } else {
-                    return Text(CurrencyFormatter.toRupiah(controller.summary['tabungan']), style: Get.textTheme.bodyMedium?.copyWith(color: Colors.white),);
+                    return Text(CurrencyFormatter.toRupiah(int.parse(controller.summary['tabungan'] ?? '0')), style: Get.textTheme.bodyMedium?.copyWith(color: Colors.white),);
                   }
                 })
 

@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:snpos/app/enums/absen_status.dart';
+import 'package:snpos/app/modules/main_nav/children/attendance/views/after_absen_view.dart';
 import 'package:snpos/app/modules/main_nav/children/home/views/not_absen_yet_view.dart';
 import 'package:snpos/app/utils/currency_formatter.dart';
 import 'package:snpos/app/utils/currency_formatter.dart';
@@ -80,6 +82,8 @@ class HomeView extends GetView<HomeController> {
             onRefresh: controller.refreshPage,
             child: ListView.builder(itemCount: controller.products.length, itemBuilder: (context, index) => productItem(index)),
           );
+        } else if (controller.absenStatus.value == AbsenStatus.AfterAbsen) {
+          return AfterAbsenView();
         } else {
           return const NotAbsenYetView();
         }

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:snpos/app/modules/main_nav/children/profile/providers/profile_provider.dart';
 
 class DepositReportController extends GetxController {
@@ -12,6 +13,8 @@ class DepositReportController extends GetxController {
 
   var headerLoading = false.obs;
   var summary = {}.obs;
+
+  final box = GetStorage();
 
   @override
   void onInit() {
@@ -54,7 +57,8 @@ class DepositReportController extends GetxController {
   Future<void> fetchDeposits() async {
     isLoading.value = true;
 
-    var response = await provider.fetchDeposits(dateRange.value!.start, dateRange.value!.end);
+    String token = box.read('token');
+    var response = await provider.fetchDeposits(dateRange.value!.start, dateRange.value!.end, token);
 
     if(response.statusCode == 200) {
       deposits.value = response.body['data'];
@@ -67,8 +71,8 @@ class DepositReportController extends GetxController {
 
   Future<void> summaryDeposits() async {
     headerLoading.value = true;
-
-    var response = await provider.summaryDeposits(dateRange.value!.start, dateRange.value!.end);
+    String token = box.read('token');
+    var response = await provider.summaryDeposits(dateRange.value!.start, dateRange.value!.end, token);
 
     if(response.statusCode == 200) {
       summary.value = response.body['data'];

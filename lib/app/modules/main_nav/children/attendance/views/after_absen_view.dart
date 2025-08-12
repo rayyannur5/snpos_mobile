@@ -21,9 +21,17 @@ class AfterAbsenView extends GetView<AttendanceController> {
                 SizedBox(height: 20),
                 Text('Terimakasih Sudah Bekerja dengan Baik', style: Get.textTheme.bodyLarge?.copyWith(fontWeight: FontWeight.bold)),
                 SizedBox(height: 20),
-                SizedBox(
-                  width: Get.width,
-                  child: FilledButton(onPressed: () => Get.toNamed(Routes.CREATE_DEPOSIT), child: Text('Buat Laporan')),
+                Obx(
+                  () {
+                    if(controller.canDeposit.value) {
+                      return SizedBox(
+                        width: Get.width,
+                        child: FilledButton(onPressed: () => Get.toNamed(Routes.CREATE_DEPOSIT), child: Text('Buat Laporan')),
+                      );
+                    } else {
+                      return SizedBox();
+                    }
+                  }
                 )
               ],
             ),

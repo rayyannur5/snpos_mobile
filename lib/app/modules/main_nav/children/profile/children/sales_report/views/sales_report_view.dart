@@ -65,14 +65,14 @@ class SalesReportView extends GetView<SalesReportController> {
                         columns: <DataColumn>[
                           DataColumn(label: Text('Banyak Penjualan', style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold))),
                           DataColumn(label: Text(':', style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold))),
-                          DataColumn(label: Text('${controller.summary['total']} Transaksi', style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold))),
+                          DataColumn(label: Text('${controller.summary['total'].toString()} Transaksi', style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold))),
                         ],
                         rows: <DataRow>[
                           DataRow(
                             cells: <DataCell>[
                               DataCell(Text('Omset', style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold))),
                               DataCell(Text(':', style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold))),
-                              DataCell(Text(CurrencyFormatter.toRupiah(controller.summary['omset']), style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold))),
+                              DataCell(Text(CurrencyFormatter.toRupiah(int.parse(controller.summary['omset'] ?? '0')), style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold))),
                             ],
                           ),
                         ],

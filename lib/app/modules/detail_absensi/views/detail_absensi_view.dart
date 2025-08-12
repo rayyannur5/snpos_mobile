@@ -3,33 +3,21 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:snpos/app/utils/currency_formatter.dart';
 
-import '../controllers/create_deposit_controller.dart';
+import '../controllers/detail_absensi_controller.dart';
 
-class CreateDepositView extends GetView<CreateDepositController> {
-  const CreateDepositView({super.key});
+class DetailAbsensiView extends GetView<DetailAbsensiController> {
+  const DetailAbsensiView({super.key});
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text('Buat Laporan', style: Get.textTheme.headlineLarge), toolbarHeight: 80),
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
-      floatingActionButton: Container(
-        padding: EdgeInsets.all(20),
-        width: Get.width,
-        child: Obx(() {
-          if (controller.buttonLoading.value) {
-            return FilledButton(onPressed: null, child: SizedBox(height: 30, width: 30, child: CircularProgressIndicator()));
-          } else {
-            return FilledButton(onPressed: controller.response['total_amount'] == null ? null : () => controller.deposit(), child: Text('Setorkan'));
-          }
-        }),
-      ),
+      appBar: AppBar(title: Text('Info Absensi', style: Get.textTheme.headlineLarge), toolbarHeight: 80),
       body: Obx(() {
         if (controller.isLoading.value) {
           return Center(child: CircularProgressIndicator());
         }
 
         return RefreshIndicator(
-          onRefresh: () => controller.fetchTransactionNotDepositYet(),
+          onRefresh: () => controller.detailAttendance(controller.id),
           child: Padding(
             padding: const EdgeInsets.all(20.0),
             child: ListView(
@@ -68,12 +56,6 @@ class CreateDepositView extends GetView<CreateDepositController> {
                       ),
                     ],
                   ),
-                ),
-                const SizedBox(height: 20),
-                TextField(
-                  maxLines: 3,
-                  controller: controller.remarkController,
-                  decoration: InputDecoration(labelText: 'Catatan', border: OutlineInputBorder(borderRadius: BorderRadius.circular(15))),
                 ),
               ],
             ),

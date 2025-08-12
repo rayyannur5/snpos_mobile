@@ -24,7 +24,9 @@ class DBHelper {
           date TEXT,
           sell INTEGER,
           pay INTEGER,
-          active INTEGER
+          payment_method INT,
+          remarks TEXT,
+          path_picture TEXT
         );
       ''');
 
@@ -33,7 +35,8 @@ class DBHelper {
           code_id TEXT,
           ordinal INTEGER,
           product_id INTEGER,
-          qty INTEGER
+          qty INTEGER,
+          price INTEGER
         );
       ''');
       },
@@ -46,15 +49,28 @@ class DBHelper {
     required String date,
     required int sell,
     required int pay,
+    required int payment_method,
+    required String remarks,
+    required String path,
     required List<Map<String, dynamic>> products,
   }) async {
     final dbClient = await db;
 
-    await dbClient.insert('transactions', {'code': code, 'user_id': userId, 'date': date, 'sell': sell, 'pay': pay, 'active': 1});
+    await dbClient.insert('transactions', {
+      'code': code,
+      'user_id': userId,
+      'date': date,
+      'sell': sell,
+      'pay': pay,
+      'payment_method' : payment_method,
+      'remarks' : remarks,
+      'path_picture' : path
+    });
 
     for (int i = 0; i < products.length; i++) {
-      await dbClient.insert('transaction_items', {'code_id': code, 'ordinal': i + 1, 'product_id': products[i]['id'], 'qty': products[i]['cart']});
+      await dbClient.insert('transaction_items', {'code_id': code, 'ordinal': i + 1, 'product_id': products[i]['id'], 'qty': products[i]['cart'], 'price': products[i]['price']});
     }
+
   }
 
   static Future<List<Map<String, dynamic>>> getAllTransactions() async {

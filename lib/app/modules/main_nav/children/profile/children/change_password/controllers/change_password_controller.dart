@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:snpos/app/modules/main_nav/children/profile/providers/profile_provider.dart';
 import 'package:snpos/app/routes/app_pages.dart';
 
@@ -19,6 +20,10 @@ class ChangePasswordController extends GetxController {
   final formKey = GlobalKey<FormState>();
 
   var buttonLoading = false.obs;
+
+  final box = GetStorage();
+
+  final scrollController = ScrollController();
 
   @override
   void onInit() {
@@ -56,7 +61,8 @@ class ChangePasswordController extends GetxController {
 
       buttonLoading.value = true;
 
-      var response = await provider.changePassword(old_password.text, new_password.text);
+      String token = box.read('token');
+      var response = await provider.changePassword(old_password.text, new_password.text, token);
       if(response.statusCode == 200) {
         Get.snackbar('Berhasil ubah password', '', backgroundColor: Colors.green, colorText: Colors.white);
         await Future.delayed(Duration(milliseconds: 500));
@@ -70,6 +76,16 @@ class ChangePasswordController extends GetxController {
     } else {
       print("Form tidak valid");
     }
+  }
+
+  void scrollTo(double position) {
+    Future.delayed(Duration(milliseconds: 300), () {
+      scrollController.animateTo(
+        position,
+        duration: Duration(milliseconds: 300),
+        curve: Curves.easeInOut,
+      );
+    });
   }
 
 }

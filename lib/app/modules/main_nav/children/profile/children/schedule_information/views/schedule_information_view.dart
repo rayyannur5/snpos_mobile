@@ -89,20 +89,22 @@ class ScheduleInformationView extends GetView<ScheduleInformationController> {
                     dataRowMinHeight: 30,
                     dataRowMaxHeight: 40,
                     headingRowHeight: 30,
-                    columns: columnKeys.map((key) => DataColumn(label: Text(key, style: TextStyle(fontWeight: FontWeight.bold)))).toList(),
+                    columns: [
+                      DataColumn(label: Text('Tanggal')),
+                      DataColumn(label: Text('Shift')),
+                      DataColumn(label: Text('Outlet')),
+                      DataColumn(label: Text('Status'))
+                    ],
                     rows:
                         dataList.map((item) {
                           final row = item as Map<String, dynamic>;
                           return DataRow(
-                            cells:
-                                columnKeys.map((key) {
-                                  if(key.toLowerCase() == 'date') {
-                                    var date = DateTime.parse(row[key]);
-                                    return DataCell(Text(DateFormat('dd/MM/yyyy').format(date)));
-                                  } else {
-                                    return DataCell(Text(row[key]?.toString() ?? ""));
-                                  }
-                                }).toList(),
+                            cells: [
+                              DataCell(Text(DateFormat('dd/MM/yyyy').format(DateTime.parse(row['date'])))),
+                              DataCell(Text(row['shift'])),
+                              DataCell(Text(row['outlet'])),
+                              DataCell(Center(child: Text(row['status'] == 1 ? '🟢' : row['status'] == 2 ? '🔴' : '')), ),
+                            ]
                           );
                         }).toList(),
                   );

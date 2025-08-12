@@ -14,7 +14,8 @@ abstract class Routes {
   static const TRANSACTION_SUCCESS = '$HOME${_Paths.TRANSACTION_SUCCESS}';
 
   static const ATTENDANCE_CAMERA = ATTENDANCE + _Paths.ATTENDANCE_CAMERA;
-  static const ATTENDANCE_TRANSACTION = ATTENDANCE + _Paths.ATTENDANCE_TRANSACTION;
+  static const ATTENDANCE_TRANSACTION =
+      ATTENDANCE + _Paths.ATTENDANCE_TRANSACTION;
 
   static const CREATE_DEPOSIT = ATTENDANCE + _Paths.CREATE_DEPOSIT;
 
@@ -23,6 +24,8 @@ abstract class Routes {
   static const DEPOSIT_REPORT = PROFILE + _Paths.DEPOSIT_REPORT;
   static const SCHEDULE_INFORMATION = PROFILE + _Paths.SCHEDULE_INFORMATION;
   static const CHANGE_PASSWORD = PROFILE + _Paths.CHANGE_PASSWORD;
+  static const CAMERA_PICKER = _Paths.CAMERA_PICKER;
+  static const DETAIL_ABSENSI = _Paths.DETAIL_ABSENSI;
 }
 
 abstract class _Paths {
@@ -42,4 +45,6 @@ abstract class _Paths {
   static const CREATE_DEPOSIT = '/create-deposit';
   static const SCHEDULE_INFORMATION = '/schedule-information';
   static const CHANGE_PASSWORD = '/change-password';
+  static const CAMERA_PICKER = '/camera-picker';
+  static const DETAIL_ABSENSI = '/detail-absensi';
 }

@@ -54,50 +54,16 @@ class AttendanceProvider extends GetConnect {
 
   }
 
-  Future<Response> getTransactionNotDepositYet () async {
-    await Future.delayed(const Duration(seconds: 1));
-    return Response(
-        statusCode: 200,
-        body: {
-          'message': 'success',
-          'data' : {
-            'totalAmount' : 3000000,
-            'items': [
-              {
-                'productId': 1,
-                'productName': 'Service Rutin',
-                'qty': 10,
-                'price': 100000,
-                'totalAmount': 1000000
-              },
-              {
-                'productId': 2,
-                'productName': 'Ganti Oli',
-                'qty': 20,
-                'price': 50000,
-                'totalAmount': 1000000
-              },
-              {
-                'productId': 3,
-                'productName': 'Ganti Ban',
-                'qty': 5,
-                'price': 200000,
-                'totalAmount': 1000000
-              }
-            ]
-          },
-        }
-    );
+  Future<Response> getTransactionNotDepositYet (String token) async {
+    return get('/attendance/summary', headers: {'Authorization': 'Bearer $token', 'Accept': 'application/json'});
   }
 
-  Future<Response> deposit () async {
-    await Future.delayed(const Duration(seconds: 1));
-    return Response(
-        statusCode: 200,
-        body: {
-          'message': 'success',
-        }
-    );
+  Future<Response> getAttendanceToday ({token}) async {
+    return get('/attendance/today', headers: {'Authorization': 'Bearer $token', 'Accept': 'application/json'});
+  }
+
+  Future<Response> deposit (String token, String remarks) async {
+    return post('/attendance/deposit', { 'remarks' : remarks }, headers: {'Authorization': 'Bearer $token', 'Accept': 'application/json'});
   }
 
 }

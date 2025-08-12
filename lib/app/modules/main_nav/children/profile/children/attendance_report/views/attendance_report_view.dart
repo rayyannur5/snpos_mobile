@@ -65,14 +65,14 @@ class AttendanceReportView extends GetView<AttendanceReportController> {
                           columns: <DataColumn>[
                             DataColumn(label: Text('Tepat Waktu', style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold))),
                             DataColumn(label: Text(':', style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold))),
-                            DataColumn(label: Text(controller.summary['ontime'].toString(), style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold))),
+                            DataColumn(label: Text(controller.summary['ontime'] == null ? '-' : controller.summary['ontime'].toString(), style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold))),
                           ],
                           rows: <DataRow>[
                             DataRow(
                               cells: <DataCell>[
                                 DataCell(Text('Terlambat', style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold))),
                                 DataCell(Text(':', style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold))),
-                                DataCell(Text(controller.summary['late'].toString(), style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold))),
+                                DataCell(Text(controller.summary['late'] == null ? '-' : controller.summary['late'].toString(), style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold))),
                               ],
                             ),
                           ],
@@ -142,13 +142,14 @@ class AttendanceReportView extends GetView<AttendanceReportController> {
                       mainAxisSize: MainAxisSize.min,
                       children: controller.attendances.map((transaction) {
                         return AttendanceItemWidget(
+                          id: transaction['id'].toString(),
                           shift: transaction['shift'],
-                          omset: transaction['omset'],
+                          omset: int.parse(transaction['omset'] ?? '0'),
                           outlet: transaction['outlet'],
-                          isLate: transaction['is_late'],
-                          isDeposit: transaction['is_deposit'],
+                          isLate: transaction['is_late'] == 1 ? true : false,
+                          isDeposit: transaction['is_deposit'] == 1 ? true : false,
                           dateIn: DateTime.parse(transaction['date_in']),
-                          dateOut: DateTime.parse(transaction['date_out']),
+                          dateOut: transaction['date_out'] == null ? null : DateTime.parse(transaction['date_out']),
                         );
                       }).toList(),
                     );

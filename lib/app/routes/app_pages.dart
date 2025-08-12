@@ -1,7 +1,9 @@
 import 'package:get/get.dart';
-import 'package:snpos/app/modules/main_nav/children/profile/children/change_password/bindings/change_password_binding.dart';
-import 'package:snpos/app/modules/main_nav/children/profile/children/change_password/views/change_password_view.dart';
 
+import '../modules/camera_picker/bindings/camera_picker_binding.dart';
+import '../modules/camera_picker/views/camera_picker_view.dart';
+import '../modules/detail_absensi/bindings/detail_absensi_binding.dart';
+import '../modules/detail_absensi/views/detail_absensi_view.dart';
 import '../modules/landing/bindings/landing_binding.dart';
 import '../modules/landing/views/landing_view.dart';
 import '../modules/login/bindings/login_binding.dart';
@@ -22,6 +24,8 @@ import '../modules/main_nav/children/home/views/home_view.dart';
 import '../modules/main_nav/children/profile/bindings/profile_binding.dart';
 import '../modules/main_nav/children/profile/children/attendance_report/bindings/attendance_report_binding.dart';
 import '../modules/main_nav/children/profile/children/attendance_report/views/attendance_report_view.dart';
+import '../modules/main_nav/children/profile/children/change_password/bindings/change_password_binding.dart';
+import '../modules/main_nav/children/profile/children/change_password/views/change_password_view.dart';
 import '../modules/main_nav/children/profile/children/deposit_report/bindings/deposit_report_binding.dart';
 import '../modules/main_nav/children/profile/children/deposit_report/views/deposit_report_view.dart';
 import '../modules/main_nav/children/profile/children/sales_report/bindings/sales_report_binding.dart';
@@ -119,6 +123,15 @@ class AppPages {
                 ),
               ]),
         ]),
-
+    GetPage(
+      name: _Paths.CAMERA_PICKER,
+      page: () => const CameraPickerView(),
+      binding: CameraPickerBinding(),
+    ),
+    GetPage(
+      name: _Paths.DETAIL_ABSENSI,
+      page: () => const DetailAbsensiView(),
+      binding: DetailAbsensiBinding(),
+    ),
   ];
 }

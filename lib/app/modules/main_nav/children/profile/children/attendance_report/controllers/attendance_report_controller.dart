@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:snpos/app/modules/main_nav/children/profile/providers/profile_provider.dart';
 
 class AttendanceReportController extends GetxController {
@@ -12,6 +13,8 @@ class AttendanceReportController extends GetxController {
 
   var headerLoading = false.obs;
   var summary = {}.obs;
+
+  final box = GetStorage();
 
   @override
   void onInit() {
@@ -54,7 +57,8 @@ class AttendanceReportController extends GetxController {
   Future<void> fetchAttendances() async {
     isLoading.value = true;
 
-    var response = await provider.fetchAttendances(dateRange.value!.start, dateRange.value!.end);
+    String token = box.read('token');
+    var response = await provider.fetchAttendances(dateRange.value!.start, dateRange.value!.end, token);
 
     if(response.statusCode == 200) {
       attendances.value = response.body['data'];
@@ -67,8 +71,8 @@ class AttendanceReportController extends GetxController {
 
   Future<void> summaryAttendances() async {
     headerLoading.value = true;
-
-    var response = await provider.summaryAttendances(dateRange.value!.start, dateRange.value!.end);
+    String token = box.read('token');
+    var response = await provider.summaryAttendances(dateRange.value!.start, dateRange.value!.end, token);
 
     if(response.statusCode == 200) {
       summary.value = response.body['data'];

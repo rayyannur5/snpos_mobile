@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:snpos/app/modules/main_nav/children/profile/providers/profile_provider.dart';
 
 class ScheduleInformationController extends GetxController {
@@ -11,13 +12,15 @@ class ScheduleInformationController extends GetxController {
   var isLoading = false.obs;
   var schedules = [].obs;
 
+  final box = GetStorage();
+
   @override
   void onInit() {
     super.onInit();
 
     dateRange.value = DateTimeRange(
       start: DateTime.now().subtract(Duration(days: 7)),
-      end: DateTime.now(),
+      end: DateTime.now().add(Duration(days: 7)),
     );
 
     fetchSchedule();
@@ -49,10 +52,12 @@ class ScheduleInformationController extends GetxController {
 
   Future<void> fetchSchedule() async {
     isLoading.value = true;
-    var response = await provider.fetchSchedule(dateRange.value!.start, dateRange.value!.end);
+    String token = box.read('token');
+    var response = await provider.fetchSchedule(dateRange.value!.start, dateRange.value!.end, token);
     if(response.statusCode == 200) {
       schedules.value = response.body['data'];
     } else {
+      print(response.body['message']);
       Get.snackbar('Error fetch schedule', response.body['message']);
     }
     isLoading.value = false;
