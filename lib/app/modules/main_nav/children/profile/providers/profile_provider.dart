@@ -1,13 +1,8 @@
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
+import 'package:snpos/app/data/providers/base_api_provider.dart';
 
-class ProfileProvider extends GetConnect {
-  @override
-  void onInit() {
-    httpClient.baseUrl = 'http://10.0.2.2:8000/api';
-    httpClient.defaultContentType = 'application/json';
-    httpClient.timeout = const Duration(seconds: 10);
-  }
+class ProfileProvider extends BaseApiProvider {
 
   Future<Response> logout(String token) {
     return post('/logout', {}, headers: {'Authorization': 'Bearer $token'});

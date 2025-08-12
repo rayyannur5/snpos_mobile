@@ -1,13 +1,7 @@
 import 'package:get/get.dart';
+import 'package:snpos/app/data/providers/base_api_provider.dart';
 
-class LoginProvider extends GetConnect {
-  @override
-  void onInit() {
-    httpClient.baseUrl = 'http://10.0.2.2:8000/api';
-    httpClient.defaultContentType = 'application/json';
-    httpClient.timeout = const Duration(seconds: 10);
-    super.onInit();
-  }
+class LoginProvider extends BaseApiProvider {
 
 
   Future<Response> login(String username, String password) {

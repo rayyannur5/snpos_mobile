@@ -1,14 +1,9 @@
 import 'dart:io';
 
 import 'package:get/get.dart';
+import 'package:snpos/app/data/providers/base_api_provider.dart';
 
-class AttendanceProvider extends GetConnect {
-  @override
-  void onInit() {
-    httpClient.baseUrl = 'http://10.0.2.2:8000/api';
-    httpClient.defaultContentType = 'application/json';
-    httpClient.timeout = const Duration(seconds: 10);
-  }
+class AttendanceProvider extends BaseApiProvider {
 
   Future<Response> fetchSchedule(String token) {
     return get('/attendance/schedule', headers: {'Authorization': 'Bearer $token'});

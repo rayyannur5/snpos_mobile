@@ -2,14 +2,9 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:get/get.dart';
+import 'package:snpos/app/data/providers/base_api_provider.dart';
 
-class HomeProvider extends GetConnect {
-  @override
-  void onInit() {
-    httpClient.baseUrl = 'http://10.0.2.2:8000/api';
-    httpClient.defaultContentType = 'application/json';
-    httpClient.timeout = const Duration(seconds: 10);
-  }
+class HomeProvider extends BaseApiProvider {
 
   Future<Response> updateUserData(String token) => get('/attendance', headers: {'Authorization': 'Bearer $token', 'Accept': 'application/json'});
 
