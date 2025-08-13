@@ -34,14 +34,14 @@ class SalesReportView extends GetView<SalesReportController> {
                           columns: const <DataColumn>[
                             DataColumn(label: Text('Banyak Penjualan', style: TextStyle(color: Colors.transparent, fontWeight: FontWeight.bold))),
                             DataColumn(label: Text(':', style: TextStyle(color: Colors.transparent, fontWeight: FontWeight.bold))),
-                            DataColumn(label: Text('3 Transaksi', style: TextStyle(color: Colors.transparent, fontWeight: FontWeight.bold))),
+                            DataColumn(label: Text('3', style: TextStyle(color: Colors.transparent, fontWeight: FontWeight.bold))),
                           ],
                           rows: const <DataRow>[
                             DataRow(
                               cells: <DataCell>[
                                 DataCell(Text('Omset', style: TextStyle(color: Colors.transparent, fontWeight: FontWeight.bold))),
                                 DataCell(Text(':', style: TextStyle(color: Colors.transparent, fontWeight: FontWeight.bold))),
-                                DataCell(Text('342355', style: TextStyle(color: Colors.transparent, fontWeight: FontWeight.bold))),
+                                DataCell(Text('3', style: TextStyle(color: Colors.transparent, fontWeight: FontWeight.bold))),
                               ],
                             ),
                           ],
