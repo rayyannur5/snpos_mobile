@@ -5,13 +5,30 @@ import 'package:snpos/app/data/providers/base_api_provider.dart';
 
 class AttendanceProvider extends BaseApiProvider {
 
-  Future<Response> fetchSchedule(String token) {
-    return get('/attendance/schedule', headers: {'Authorization': 'Bearer $token'});
+  Future<Response> fetchSchedule(String token) async {
+    Response response = await get(
+      '/attendance/schedule',
+      headers: {'Authorization': 'Bearer $token'},
+    );
+    return createResponse(response);
   }
 
-  Future<Response> updateUserData(String token) => get('/attendance', headers: {'Authorization': 'Bearer $token', 'Accept': 'application/json'});
+  Future<Response> updateUserData(String token) async {
+    Response response = await get(
+      '/attendance',
+      headers: {'Authorization': 'Bearer $token', 'Accept': 'application/json'},
+    );
+    return createResponse(response);
+  }
 
-  Future<Response> sendAttendance({scheduleId, latitude, longitude, namedLocation, path, token}) async {
+  Future<Response> sendAttendance({
+    scheduleId,
+    latitude,
+    longitude,
+    namedLocation,
+    path,
+    token,
+  }) async {
     final imageFile = File(path); // ambil file dari path
     final fileName = imageFile.path.split('/').last; // nama file
 
@@ -26,11 +43,22 @@ class AttendanceProvider extends BaseApiProvider {
       ),
     });
 
-    return post('/attendance',  form, headers: { 'Authorization': 'Bearer $token', 'Accept': 'application/json' } );
-
+    Response response = await post(
+      '/attendance',
+      form,
+      headers: {'Authorization': 'Bearer $token', 'Accept': 'application/json'},
+    );
+    return createResponse(response);
   }
 
-  Future<Response> sendExitAttendance({attendanceId, latitude, longitude, namedLocation, path, token}) async {
+  Future<Response> sendExitAttendance({
+    attendanceId,
+    latitude,
+    longitude,
+    namedLocation,
+    path,
+    token,
+  }) async {
     final imageFile = File(path); // ambil file dari path
     final fileName = imageFile.path.split('/').last; // nama file
 
@@ -45,20 +73,38 @@ class AttendanceProvider extends BaseApiProvider {
       ),
     });
 
-    return post('/attendance/exit',  form, headers: { 'Authorization': 'Bearer $token', 'Accept': 'application/json' } );
-
+    Response response = await post(
+      '/attendance/exit',
+      form,
+      headers: {'Authorization': 'Bearer $token', 'Accept': 'application/json'},
+    );
+    return createResponse(response);
   }
 
-  Future<Response> getTransactionNotDepositYet (String token) async {
-    return get('/attendance/summary', headers: {'Authorization': 'Bearer $token', 'Accept': 'application/json'});
+  Future<Response> getTransactionNotDepositYet(String token) async {
+    Response response = await get(
+      '/attendance/summary',
+      headers: {'Authorization': 'Bearer $token', 'Accept': 'application/json'},
+    );
+    return createResponse(response);
   }
 
-  Future<Response> getAttendanceToday ({token}) async {
-    return get('/attendance/today', headers: {'Authorization': 'Bearer $token', 'Accept': 'application/json'});
+  Future<Response> getAttendanceToday({token}) async {
+    Response response = await get(
+      '/attendance/today',
+      headers: {'Authorization': 'Bearer $token', 'Accept': 'application/json'},
+    );
+    return createResponse(response);
   }
 
-  Future<Response> deposit (String token, String remarks) async {
-    return post('/attendance/deposit', { 'remarks' : remarks }, headers: {'Authorization': 'Bearer $token', 'Accept': 'application/json'});
+  Future<Response> deposit(String token, String remarks) async {
+    Response response = await post(
+      '/attendance/deposit',
+      {'remarks': remarks},
+      headers: {'Authorization': 'Bearer $token', 'Accept': 'application/json'},
+    );
+    return createResponse(response);
   }
+
 
 }

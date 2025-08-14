@@ -5,6 +5,7 @@ import 'package:intl/intl.dart';
 import 'package:shimmer_animation/shimmer_animation.dart';
 import 'package:snpos/app/utils/currency_formatter.dart';
 import 'package:snpos/app/widgets/attendance_item_widget.dart';
+import 'package:snpos/app/widgets/no_internet_widget.dart';
 
 import '../controllers/attendance_report_controller.dart';
 
@@ -47,7 +48,11 @@ class AttendanceReportView extends GetView<AttendanceReportController> {
                           ],
                         ),
                       );
-                    } else {
+                    }
+                    else if(controller.errorMessage.value != '') {
+                      return Text('No Internet');
+                    }
+                    else {
                       return DataTableTheme(
                         data: DataTableThemeData(
                           headingRowHeight: 0, // hilangkan heading
@@ -137,7 +142,11 @@ class AttendanceReportView extends GetView<AttendanceReportController> {
                 Obx(() {
                   if (controller.isLoading.value) {
                     return SizedBox(height: Get.height/2, child: Center(child: CircularProgressIndicator()));
-                  } else {
+                  }
+                  else if(controller.errorMessage.value != '') {
+                    return NoInternetWidget(onClickRefresh: () => controller.refreshPage(), errorMessage: controller.errorMessage.value);
+                  }
+                  else {
                     return Column(
                       mainAxisSize: MainAxisSize.min,
                       children: controller.attendances.map((transaction) {

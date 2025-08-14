@@ -10,6 +10,7 @@ class ScheduleInformationController extends GetxController {
   Rxn<DateTimeRange> dateRange = Rxn<DateTimeRange>();
 
   var isLoading = false.obs;
+  var errorMessage = ''.obs;
   var schedules = [].obs;
 
   final box = GetStorage();
@@ -51,15 +52,17 @@ class ScheduleInformationController extends GetxController {
   }
 
   Future<void> fetchSchedule() async {
+
     isLoading.value = true;
+    errorMessage.value = '';
     String token = box.read('token');
     var response = await provider.fetchSchedule(dateRange.value!.start, dateRange.value!.end, token);
+    isLoading.value = false;
     if(response.statusCode == 200) {
       schedules.value = response.body['data'];
     } else {
-      print(response.body['message']);
-      Get.snackbar('Error fetch schedule', response.body['message']);
+      errorMessage.value = response.body['message'];
     }
-    isLoading.value = false;
+
   }
 }

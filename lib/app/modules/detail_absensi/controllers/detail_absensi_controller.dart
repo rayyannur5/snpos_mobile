@@ -40,10 +40,13 @@ class DetailAbsensiController extends GetxController {
     String token = box.read('token');
     Response res = await provider.detailAttendance(token, id);
     if(res.statusCode == 200) {
-      print(res.body['data']);
       response.value = res.body['data'] ?? {};
     } else {
-      Get.snackbar('Error fetch transaction data', '${res.body.message}', backgroundColor: Colors.red, colorText: Colors.white);
+      if(res.body.containsKey('message')) {
+        Get.snackbar('Error fetch transaction data', '${res.body.message}', backgroundColor: Colors.red, colorText: Colors.white);
+      } else {
+        Get.snackbar('Error fetch transaction data', 'Tidak ada jaringan internet', backgroundColor: Colors.red, colorText: Colors.white);
+      }
     }
     isLoading.value = false;
   }

@@ -9,6 +9,7 @@ import 'package:snpos/app/modules/main_nav/children/home/views/not_absen_yet_vie
 import 'package:snpos/app/utils/currency_formatter.dart';
 import 'package:snpos/app/utils/currency_formatter.dart';
 import 'package:snpos/app/widgets/circular_spinner_with_text.dart';
+import 'package:snpos/app/widgets/no_internet_widget.dart';
 
 import '../controllers/home_controller.dart';
 
@@ -76,6 +77,12 @@ class HomeView extends GetView<HomeController> {
       body: Obx(() {
         if (controller.isLoading.value) {
           return const Center(child: CircularProgressIndicator());
+        }
+        if (controller.errorMessage.value  != '') {
+          return Padding(
+            padding: const EdgeInsets.all(20.0),
+            child: NoInternetWidget(onClickRefresh: () => controller.refreshPage(), errorMessage: controller.errorMessage.value),
+          );
         }
         if (controller.absenStatus.value == AbsenStatus.IsAbsen) {
           return RefreshIndicator(

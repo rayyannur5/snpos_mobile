@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:intl/intl.dart';
 import 'package:shimmer_animation/shimmer_animation.dart';
 import 'package:snpos/app/utils/currency_formatter.dart';
+import 'package:snpos/app/widgets/no_internet_widget.dart';
 
 import '../controllers/deposit_report_controller.dart';
 
@@ -28,7 +30,8 @@ class DepositReportView extends GetView<DepositReportController> {
                     return Shimmer(
                       child: Text(CurrencyFormatter.toRupiah(600000), style: Get.textTheme.bodyMedium?.copyWith(color: Colors.transparent))
                     );
-                  } else {
+                  }
+                  else {
                     return Text(CurrencyFormatter.toRupiah(int.parse(controller.summary['tabungan'] ?? '0')), style: Get.textTheme.bodyMedium?.copyWith(color: Colors.white),);
                   }
                 })
@@ -90,7 +93,11 @@ class DepositReportView extends GetView<DepositReportController> {
               Obx(() {
                 if (controller.isLoading.value) {
                   return SizedBox(height: Get.height/2, child: Center(child: CircularProgressIndicator()));
-                } else {
+                }
+                else if(controller.errorMessage.value != '') {
+                  return NoInternetWidget(onClickRefresh: () => controller.refreshPage(), errorMessage: controller.errorMessage.value,);
+                }
+                else {
                   return Column(
                     mainAxisSize: MainAxisSize.min,
                     children: controller.deposits.map((e) {

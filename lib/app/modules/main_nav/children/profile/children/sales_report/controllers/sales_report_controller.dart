@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
@@ -11,6 +12,7 @@ class SalesReportController extends GetxController {
   Rxn<DateTimeRange> dateRange = Rxn<DateTimeRange>();
 
   var isLoading = false.obs;
+  var errorMessage = ''.obs;
   var transactions = [].obs;
 
   var headerLoading = false.obs;
@@ -57,13 +59,13 @@ class SalesReportController extends GetxController {
 
   void fetchSalesReport() async {
     isLoading.value = true;
-
+    errorMessage.value = '';
     String token = box.read('token');
     var response = await provider.fetchSalesReport(dateRange.value!.start, dateRange.value!.end, token);
     if(response.statusCode == 200) {
       transactions.value = response.body['data'];
     } else {
-      Get.snackbar('Error fetch transaction', response.body['message']);
+      errorMessage.value = response.body['message'];
     }
 
     isLoading.value = false;
@@ -71,12 +73,14 @@ class SalesReportController extends GetxController {
 
   void summarySalesReport() async {
     headerLoading.value = true;
+    errorMessage.value = '';
     String token = box.read('token');
     var response = await provider.summarySalesReport(dateRange.value!.start, dateRange.value!.end, token);
     if(response.statusCode == 200) {
       summary.value = response.body['data'];
     } else {
-      Get.snackbar('Error fetch transaction', response.body['message']);
+      Get.snackbar('Error fetch transaction', response.body['message'], backgroundColor: Colors.red,colorText: Colors.white);
+      errorMessage.value = response.body['message'];
     }
 
     headerLoading.value = false;

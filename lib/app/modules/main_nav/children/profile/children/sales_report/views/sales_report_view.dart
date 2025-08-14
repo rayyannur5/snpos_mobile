@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:shimmer_animation/shimmer_animation.dart';
 import 'package:snpos/app/utils/currency_formatter.dart';
+import 'package:snpos/app/widgets/no_internet_widget.dart';
 
 import '../controllers/sales_report_controller.dart';
 
@@ -47,7 +48,11 @@ class SalesReportView extends GetView<SalesReportController> {
                           ],
                         ),
                       );
-                  } else {
+                  }
+                  else if (controller.errorMessage.value != '') {
+                    return SizedBox(child: Text('No Internet'),);
+                  }
+                  else {
                     return DataTableTheme(
                       data: DataTableThemeData(
                         headingRowHeight: 0, // hilangkan heading
@@ -135,7 +140,11 @@ class SalesReportView extends GetView<SalesReportController> {
               Obx(() {
                 if (controller.isLoading.value) {
                   return SizedBox(height: Get.height/2, child: Center(child: CircularProgressIndicator()));
-                } else {
+                }
+                else if (controller.errorMessage.value != '') {
+                  return NoInternetWidget(onClickRefresh: () => controller.refreshPage(), errorMessage: controller.errorMessage.value);
+                }
+                else {
                   return Column(
                     mainAxisSize: MainAxisSize.min,
                     children: controller.transactions.map((transaction) {

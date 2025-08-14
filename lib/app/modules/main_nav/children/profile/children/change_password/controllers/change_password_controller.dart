@@ -68,7 +68,7 @@ class ChangePasswordController extends GetxController {
         await Future.delayed(Duration(milliseconds: 500));
         Get.offAllNamed(Routes.MAIN_NAV);
       } else {
-        Get.snackbar('Error change password', response.body['message'], backgroundColor: Colors.red, colorText: Colors.white);
+        Get.snackbar('Error change password', response.body != null ? response.body['message'] : 'No Internet', backgroundColor: Colors.red, colorText: Colors.white);
       }
 
       buttonLoading.value = false;

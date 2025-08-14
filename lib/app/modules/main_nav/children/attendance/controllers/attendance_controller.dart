@@ -13,6 +13,7 @@ class AttendanceController extends GetxController {
   var attendanceToday = [].obs;
   var attendanceLoading = false.obs;
   var canDeposit = false.obs;
+  var errorMessage = ''.obs;
 
   final box = GetStorage();
 
@@ -37,8 +38,8 @@ class AttendanceController extends GetxController {
 
   Future<void> refreshPage() async {
     isLoading.value = true;
+    errorMessage.value = '';
     var response = await provider.updateUserData(box.read('token'));
-
     if(response.statusCode == 200) {
       var user = response.body['data'];
       box.write('user', user);
@@ -52,7 +53,7 @@ class AttendanceController extends GetxController {
         if(attendance.statusCode == 200) {
           attendanceToday.value = attendance.body['data'];
         } else {
-          print('attendance_controller ${attendance.body['message']}');
+          errorMessage.value = response.body['message'];
           Get.snackbar('Error', attendance.body['message'], backgroundColor: Colors.red, colorText: Colors.white);
         }
 
@@ -62,6 +63,9 @@ class AttendanceController extends GetxController {
         canDeposit.value = await checkCanDeposit();
         absenStatus.value = AbsenStatus.AfterAbsen;
       }
+    } else {
+      errorMessage.value = response.body['message'];
+
     }
 
     isLoading.value = false;

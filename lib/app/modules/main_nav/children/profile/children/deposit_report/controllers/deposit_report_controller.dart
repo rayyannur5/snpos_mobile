@@ -9,6 +9,7 @@ class DepositReportController extends GetxController {
 
   Rxn<DateTimeRange> dateRange = Rxn<DateTimeRange>();
   var isLoading = false.obs;
+  var errorMessage = ''.obs;
   var deposits = [].obs;
 
   var headerLoading = false.obs;
@@ -56,14 +57,14 @@ class DepositReportController extends GetxController {
 
   Future<void> fetchDeposits() async {
     isLoading.value = true;
-
+    errorMessage.value = '';
     String token = box.read('token');
     var response = await provider.fetchDeposits(dateRange.value!.start, dateRange.value!.end, token);
 
     if(response.statusCode == 200) {
       deposits.value = response.body['data'];
     } else {
-      Get.snackbar('Error fetch transaction', response.body['message']);
+      errorMessage.value = response.body['message'];
     }
 
     isLoading.value = false;
@@ -77,7 +78,7 @@ class DepositReportController extends GetxController {
     if(response.statusCode == 200) {
       summary.value = response.body['data'];
     } else {
-      Get.snackbar('Error fetch transaction', response.body['message']);
+      Get.snackbar('Error fetch data', response.body['message'], backgroundColor: Colors.red,colorText: Colors.white);
     }
 
     headerLoading.value = false;

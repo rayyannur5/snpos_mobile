@@ -9,4 +9,17 @@ class BaseApiProvider extends GetConnect {
 
     super.onInit();
   }
+
+  Response createResponse(Response response) {
+    if(response is Map) {
+      return response;
+    } else {
+      return Response(
+        statusCode: response.statusCode,
+        body: {
+          'message' : response.bodyString
+        }
+      );
+    }
+  }
 }

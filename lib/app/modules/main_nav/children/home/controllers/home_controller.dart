@@ -31,6 +31,8 @@ class HomeController extends GetxController {
 
   var pathTakePicture = ''.obs;
 
+  var errorMessage = ''.obs;
+
   @override
   void onInit() {
     super.onInit();
@@ -83,14 +85,17 @@ class HomeController extends GetxController {
       String token = box.read('token');
 
       isLoading.value = true;
+      errorMessage.value = '';
       final response = await provider.getListProducts(token);
       if (response.statusCode == 200) {
         products.value = response.body['data'] ?? [];
       } else {
-        Get.snackbar('Error', 'Gagal ambil data');
+        Get.snackbar('Error', response.body.message, backgroundColor: Colors.red, colorText: Colors.white);
+        errorMessage.value = response.body.message;
       }
     } catch (e) {
-      Get.snackbar('Error', 'Terjadi kesalahan');
+      Get.snackbar('Error', 'Terjadi kesalahan', backgroundColor: Colors.red, colorText: Colors.white);
+      errorMessage.value = e.toString();
     } finally {
       isLoading.value = false;
     }
@@ -463,6 +468,7 @@ class HomeController extends GetxController {
 
   Future<void> refreshPage() async {
     isLoading.value = true;
+    errorMessage.value = '';
     await getPaymentMethod();
     var response = await provider.updateUserData(box.read('token'));
 
@@ -480,10 +486,7 @@ class HomeController extends GetxController {
         absenStatus.value = AbsenStatus.AfterAbsen;
       }
     } else {
-      box.remove('token');
-      box.remove('user');
-      Get.offAllNamed(Routes.LANDING);
-      Get.snackbar('Gagal mengambil data', response.body['message'], backgroundColor: Colors.red, colorText: Colors.white);
+      errorMessage.value = response.body['message'];
     }
 
     isLoading.value = false;

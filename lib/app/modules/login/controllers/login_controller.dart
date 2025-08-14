@@ -43,14 +43,17 @@ class LoginController extends GetxController {
       buttonLoading.value = true;
       final response = await provider.login(username.text, password.text);
       buttonLoading.value = false;
-      print(response.body);
 
       if(response.statusCode == 200) {
         box.write('token', response.body['token']);
         box.write('user', response.body['user']);
         Get.offAllNamed(Routes.MAIN_NAV);
       } else {
-        Get.snackbar('Error login', response.body['message'], backgroundColor: Colors.red, colorText: Colors.white);
+        if(response.body.containsKey('message')) {
+          Get.snackbar('Error login', response.body['message'], backgroundColor: Colors.red, colorText: Colors.white);
+        } else {
+          Get.snackbar('Error login', 'Tidak ada jaringan internet', backgroundColor: Colors.red, colorText: Colors.white);
+        }
       }
     }
   }

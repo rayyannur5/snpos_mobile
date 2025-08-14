@@ -59,12 +59,12 @@ class ProfileController extends GetxController {
     if(response.statusCode == 200) {
       box.remove('token');
       Get.snackbar('Berhasil Logout', '', backgroundColor: Colors.green, colorText: Colors.white);
-      await Future.delayed(Duration(milliseconds: 500));
+      await Future.delayed(Duration(milliseconds: 100));
       Get.offAllNamed(Routes.LANDING);
     } else {
-      Get.back();
       await Future.delayed(Duration(milliseconds: 500));
-      Get.snackbar('Gagal Logout', response.body['message'], backgroundColor: Colors.red, colorText: Colors.white);
+      Get.back();
+      Get.snackbar('Gagal Logout', response.body != null ? response.body['message'] : 'No Internet', backgroundColor: Colors.red, colorText: Colors.white);
     }
   }
 

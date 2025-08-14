@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
+import 'package:snpos/app/widgets/no_internet_widget.dart';
 
 import '../controllers/schedule_information_controller.dart';
 
@@ -65,7 +66,11 @@ class ScheduleInformationView extends GetView<ScheduleInformationController> {
               Obx(() {
                 if (controller.isLoading.value) {
                   return SizedBox(height: Get.height / 2, child: Center(child: CircularProgressIndicator()));
-                } else {
+                }
+                else if(controller.errorMessage.value != '') {
+                  return NoInternetWidget(onClickRefresh: () => controller.fetchSchedule(), errorMessage: controller.errorMessage.value);
+                }
+                else {
                   List<dynamic> dataList = controller.schedules;
                   List<String> columnKeys = [];
 

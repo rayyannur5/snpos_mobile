@@ -9,6 +9,7 @@ class AttendanceReportController extends GetxController {
 
   Rxn<DateTimeRange> dateRange = Rxn<DateTimeRange>();
   var isLoading = false.obs;
+  var errorMessage = ''.obs;
   var attendances = [].obs;
 
   var headerLoading = false.obs;
@@ -56,14 +57,14 @@ class AttendanceReportController extends GetxController {
 
   Future<void> fetchAttendances() async {
     isLoading.value = true;
-
+    errorMessage.value = '';
     String token = box.read('token');
     var response = await provider.fetchAttendances(dateRange.value!.start, dateRange.value!.end, token);
 
     if(response.statusCode == 200) {
       attendances.value = response.body['data'];
     } else {
-      Get.snackbar('Error fetch transaction', response.body['message']);
+      errorMessage.value = response.body['message'];
     }
 
     isLoading.value = false;
@@ -71,13 +72,14 @@ class AttendanceReportController extends GetxController {
 
   Future<void> summaryAttendances() async {
     headerLoading.value = true;
+    errorMessage.value = '';
     String token = box.read('token');
     var response = await provider.summaryAttendances(dateRange.value!.start, dateRange.value!.end, token);
 
     if(response.statusCode == 200) {
       summary.value = response.body['data'];
     } else {
-      Get.snackbar('Error fetch transaction', response.body['message']);
+      errorMessage.value = response.body['message'];
     }
 
     headerLoading.value = false;
