@@ -11,13 +11,14 @@ class BaseApiProvider extends GetConnect {
   }
 
   Response createResponse(Response response) {
-    if(response is Map) {
+
+    if(response.body is Map) {
       return response;
     } else {
       return Response(
         statusCode: response.statusCode,
         body: {
-          'message' : response.bodyString
+          'message' : response.bodyString ?? 'Terjadi kesalahan'
         }
       );
     }

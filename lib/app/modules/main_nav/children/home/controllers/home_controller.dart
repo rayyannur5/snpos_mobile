@@ -471,7 +471,6 @@ class HomeController extends GetxController {
     errorMessage.value = '';
     await getPaymentMethod();
     var response = await provider.updateUserData(box.read('token'));
-
     if (response.statusCode == 200) {
       var user = response.body['data'];
       box.write('user', user);

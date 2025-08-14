@@ -15,6 +15,7 @@ class NoInternetWidget extends GetView {
         errorMessage != null ?
         Container(
           padding: EdgeInsets.all(10),
+          width: Get.width,
           decoration: BoxDecoration(border: Border.all(), borderRadius: BorderRadius.circular(15), color: Color(0xffDCDCDC)),
           child: Text(errorMessage!),
         ) : SizedBox(),

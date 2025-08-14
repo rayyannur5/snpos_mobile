@@ -81,7 +81,11 @@ class HomeView extends GetView<HomeController> {
         if (controller.errorMessage.value  != '') {
           return Padding(
             padding: const EdgeInsets.all(20.0),
-            child: NoInternetWidget(onClickRefresh: () => controller.refreshPage(), errorMessage: controller.errorMessage.value),
+            child: ListView(
+              children: [
+                NoInternetWidget(onClickRefresh: () => controller.refreshPage(), errorMessage: controller.errorMessage.value),
+              ],
+            ),
           );
         }
         if (controller.absenStatus.value == AbsenStatus.IsAbsen) {
