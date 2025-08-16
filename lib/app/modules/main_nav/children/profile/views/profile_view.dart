@@ -16,22 +16,25 @@ class ProfileView extends GetView<ProfileController> {
           borderRadius: BorderRadius.only(
             bottomLeft: Radius.circular(20),
           ),
-          child: AppBar(
-            title: Obx(
-              () {
-                return Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(controller.user['name'], style: Get.textTheme.headlineLarge?.copyWith(color: Colors.white, fontWeight: FontWeight.bold)),
-                    Text(controller.user['email'], style: Get.textTheme.bodyLarge?.copyWith(color: Colors.white, fontWeight: FontWeight.bold))
-                  ],
-                );
-              }
+          child: Hero(
+            tag: 'appbar',
+            child: AppBar(
+              title: Obx(
+                () {
+                  return Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(controller.user['name'], style: Get.textTheme.headlineLarge?.copyWith(color: Colors.white, fontWeight: FontWeight.bold)),
+                      Text(controller.user['email'], style: Get.textTheme.bodyLarge?.copyWith(color: Colors.white, fontWeight: FontWeight.bold))
+                    ],
+                  );
+                }
+              ),
+              toolbarHeight: 150,
+              backgroundColor: Get.theme.primaryColor,
+              foregroundColor: Colors.white,
+
             ),
-            toolbarHeight: 150,
-            backgroundColor: Get.theme.primaryColor,
-            foregroundColor: Colors.white,
-            
           ),
         ),
       ),
@@ -95,6 +98,21 @@ class ProfileView extends GetView<ProfileController> {
                   onTap: () => Get.toNamed(Routes.SCHEDULE_INFORMATION),
                   child: ListTile(
                     title: Text('Informasi Jadwal', style: TextStyle(fontWeight: FontWeight.bold),),
+                    trailing: Icon(Icons.arrow_forward_ios),
+                  ),
+                ),
+              ),
+            ),
+            Container(
+              margin: EdgeInsets.only(bottom: 10),
+              child: Material(
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(5),
+                child: InkWell(
+                  borderRadius: BorderRadius.circular(5),
+                  onTap: () => Get.toNamed(Routes.OVERTIME_APPLICATION),
+                  child: ListTile(
+                    title: Text('Pengajuan Lembur', style: TextStyle(fontWeight: FontWeight.bold),),
                     trailing: Icon(Icons.arrow_forward_ios),
                   ),
                 ),

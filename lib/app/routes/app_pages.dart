@@ -1,4 +1,6 @@
 import 'package:get/get.dart';
+import 'package:snpos/app/modules/main_nav/children/profile/children/overtime_application/bindings/overtime_application_binding.dart';
+import 'package:snpos/app/modules/main_nav/children/profile/children/overtime_application/views/overtime_application_view.dart';
 
 import '../modules/camera_picker/bindings/camera_picker_binding.dart';
 import '../modules/camera_picker/views/camera_picker_view.dart';
@@ -121,6 +123,11 @@ class AppPages {
                   page: () => const ChangePasswordView(),
                   binding: ChangePasswordBinding(),
                 ),
+                GetPage(
+                  name: _Paths.OVERTIME_APPLICATION,
+                  page: () => const OvertimeApplicationView(),
+                  binding: OvertimeApplicationBinding(),
+                ),
               ]),
         ]),
     GetPage(
@@ -133,5 +140,6 @@ class AppPages {
       page: () => const DetailAbsensiView(),
       binding: DetailAbsensiBinding(),
     ),
+
   ];
 }

@@ -24,6 +24,9 @@ abstract class Routes {
   static const DEPOSIT_REPORT = PROFILE + _Paths.DEPOSIT_REPORT;
   static const SCHEDULE_INFORMATION = PROFILE + _Paths.SCHEDULE_INFORMATION;
   static const CHANGE_PASSWORD = PROFILE + _Paths.CHANGE_PASSWORD;
+  static const OVERTIME_APPLICATION = PROFILE + _Paths.OVERTIME_APPLICATION;
+
+
   static const CAMERA_PICKER = _Paths.CAMERA_PICKER;
   static const DETAIL_ABSENSI = _Paths.DETAIL_ABSENSI;
 }
@@ -47,4 +50,5 @@ abstract class _Paths {
   static const CHANGE_PASSWORD = '/change-password';
   static const CAMERA_PICKER = '/camera-picker';
   static const DETAIL_ABSENSI = '/detail-absensi';
+  static const OVERTIME_APPLICATION = '/overtime-application';
 }

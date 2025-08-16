@@ -93,4 +93,20 @@ class ProfileProvider extends BaseApiProvider {
 
     return createResponse(response);
   }
+
+  Future<Response> getOperatorsAndShift(String token) async {
+    Response response = await get('/overtime/operators-and-shift', headers: {'Authorization': 'Bearer $token'});
+    return createResponse(response);
+  }
+
+  Future<Response> submitOvertime(data, String token) async {
+
+    Response response = await post(
+        '/overtime/create',
+        data,
+        headers: {'Authorization': 'Bearer $token'},
+    );
+    return createResponse(response);
+
+  }
 }
