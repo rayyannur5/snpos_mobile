@@ -20,6 +20,9 @@ class OvertimeApplicationController extends GetxController {
   var shifts = [].obs;
   var selectedShift = RxnInt();
 
+  var outlets = [].obs;
+  var selectedOutlet = RxnInt();
+
   var startTime = TimeOfDay(hour: 8, minute: 0).obs;
   var endTime = TimeOfDay(hour: 17, minute: 0).obs;
 
@@ -66,6 +69,7 @@ class OvertimeApplicationController extends GetxController {
       // Asumsikan response body list of operator names
       operators.value = response.body['data']['users'];
       shifts.value = response.body['data']['shifts'];
+      outlets.value = response.body['data']['outlets'];
     } else {
       status.value = {
         'loading': false,
@@ -133,7 +137,9 @@ class OvertimeApplicationController extends GetxController {
   Future<void> submitOvertime() async {
     if (selectedOperator.value == null ||
         selectedDate.value == null ||
-        selectedShift.value == null ) {
+        selectedShift.value == null ||
+        selectedOutlet.value == null
+    ) {
       Get.snackbar('Error', 'Lengkapi semua form terlebih dahulu', backgroundColor: Colors.red, colorText: Colors.white);
       return;
     }
@@ -143,6 +149,7 @@ class OvertimeApplicationController extends GetxController {
     final data = {
       'operator': selectedOperator.value,
       'shift': selectedShift.value,
+      'outlet': selectedOutlet.value,
       'date': selectedDate.value!.toIso8601String(),
       'start_time': '${twoDigits(startTime.value.hour)}:${twoDigits(startTime.value.minute)}',
       'end_time': '${twoDigits(endTime.value.hour)}:${twoDigits(endTime.value.minute)}',

@@ -104,6 +104,23 @@ class OvertimeApplicationView extends GetView<OvertimeApplicationController> {
                   ),
                   SizedBox(height: 20),
 
+                  Text('Pilih Outlet', style: TextStyle(fontWeight: FontWeight.bold)),
+                  SizedBox(height: 10),
+                  DropdownButtonFormField(
+                    value: controller.selectedOutlet.value,
+                    hint: Text('Pilih Outlet'),
+                    isExpanded: true,
+                    items:
+                    controller.outlets.map((operator) {
+                      return DropdownMenuItem(value: operator['id'], child: Text(operator['name']));
+                    }).toList(),
+                    onChanged: (value) {
+                      print(value);
+                      controller.selectedOutlet.value = value as int?;
+                    },
+                  ),
+                  SizedBox(height: 20),
+
                   // 3. Select Shift pakai GridView
                   Text('Pilih Shift', style: TextStyle(fontWeight: FontWeight.bold)),
                   SizedBox(height: 10),
