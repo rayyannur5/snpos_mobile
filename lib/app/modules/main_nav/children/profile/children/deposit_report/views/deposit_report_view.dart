@@ -24,15 +24,79 @@ class DepositReportView extends GetView<DepositReportController> {
               children: [
                 Text('Laporan Setoran', style: Get.textTheme.headlineLarge?.copyWith(color: Colors.white, fontWeight: FontWeight.bold)),
                 const SizedBox(height: 10),
-                Text('Tabungan', style: Get.textTheme.bodyMedium?.copyWith(color: Colors.white),),
                 Obx(() {
                   if(controller.headerLoading.value) {
                     return Shimmer(
-                      child: Text(CurrencyFormatter.toRupiah(600000), style: Get.textTheme.bodyMedium?.copyWith(color: Colors.transparent))
+                      child: DataTable(
+                        dataRowMaxHeight: 30,
+                        dataRowMinHeight: 30,
+                        headingRowHeight: 30,
+                        horizontalMargin: 0,
+                        columns: const <DataColumn>[
+                          DataColumn(label: Text('Tepat Waktu', style: TextStyle(color: Colors.transparent, fontWeight: FontWeight.bold))),
+                          DataColumn(label: Text(':', style: TextStyle(color: Colors.transparent, fontWeight: FontWeight.bold))),
+                          DataColumn(label: Text('3', style: TextStyle(color: Colors.transparent, fontWeight: FontWeight.bold))),
+                        ],
+                        rows: const <DataRow>[
+                          DataRow(
+                            cells: <DataCell>[
+                              DataCell(Text('Terlambat', style: TextStyle(color: Colors.transparent, fontWeight: FontWeight.bold))),
+                              DataCell(Text(':', style: TextStyle(color: Colors.transparent, fontWeight: FontWeight.bold))),
+                              DataCell(Text('3423', style: TextStyle(color: Colors.transparent, fontWeight: FontWeight.bold))),
+                            ],
+                          ),
+                          DataRow(
+                            cells: <DataCell>[
+                              DataCell(Text('Terlambat', style: TextStyle(color: Colors.transparent, fontWeight: FontWeight.bold))),
+                              DataCell(Text(':', style: TextStyle(color: Colors.transparent, fontWeight: FontWeight.bold))),
+                              DataCell(Text('3423', style: TextStyle(color: Colors.transparent, fontWeight: FontWeight.bold))),
+                            ],
+                          ),
+                        ],
+                      ),
                     );
                   }
+                  else if(controller.errorMessage.value != '') {
+                    return Text('No Internet');
+                  }
                   else {
-                    return Text(CurrencyFormatter.toRupiah(int.parse(controller.summary['tabungan'] ?? '0')), style: Get.textTheme.bodyMedium?.copyWith(color: Colors.white),);
+                    return DataTableTheme(
+                      data: DataTableThemeData(
+                        headingRowHeight: 0, // hilangkan heading
+                        dataRowColor: MaterialStateProperty.all(Colors.transparent),
+                        headingRowColor: MaterialStateProperty.all(Colors.transparent),
+                        dividerThickness: 0,
+                        decoration: BoxDecoration(), // hilangkan background table
+                      ),
+                      child: DataTable(
+                        dataRowMaxHeight: 30,
+                        dataRowMinHeight: 30,
+                        headingRowHeight: 30,
+                        columnSpacing: 10,
+                        horizontalMargin: 0,
+                        columns: <DataColumn>[
+                          DataColumn(label: Text('Tabungan', style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold))),
+                          DataColumn(label: Text(':', style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold))),
+                          DataColumn(label: Text(controller.summary['tabungan'] == null ? '0' : controller.summary['tabungan'].toString(), style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold))),
+                        ],
+                        rows: <DataRow>[
+                          DataRow(
+                            cells: <DataCell>[
+                              DataCell(Text('Sudah Disetorkan', style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold))),
+                              DataCell(Text(':', style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold))),
+                              DataCell(Text(controller.summary['deposit'] == null ? '-' : controller.summary['deposit'].toString(), style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold))),
+                            ],
+                          ),
+                          DataRow(
+                            cells: <DataCell>[
+                              DataCell(Text('Sudah Diverifikasi', style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold))),
+                              DataCell(Text(':', style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold))),
+                              DataCell(Text(controller.summary['verified'] == null ? '-' : controller.summary['verified'].toString(), style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold))),
+                            ],
+                          ),
+                        ],
+                      ),
+                    );
                   }
                 })
 
@@ -105,6 +169,7 @@ class DepositReportView extends GetView<DepositReportController> {
                         date: DateTime.parse(e['date']),
                         outlet: e['outlet'],
                         omset: e['omset'],
+                        verified: e['verified'] == 1 ? true : false
                       );
                     }).toList(),
                   );
@@ -117,7 +182,7 @@ class DepositReportView extends GetView<DepositReportController> {
     );
   }
 
-  Container widgetSalesReport({required String outlet, required DateTime date, required int omset}) {
+  Container widgetSalesReport({required String outlet, required DateTime date, required int omset, required bool verified}) {
     return Container(
       margin: EdgeInsets.only(bottom: 10),
       child: Material(
@@ -127,7 +192,21 @@ class DepositReportView extends GetView<DepositReportController> {
           borderRadius: BorderRadius.circular(5),
           onTap: () {},
           child: ListTile(
-            title: Text(outlet, style: TextStyle(fontWeight: FontWeight.bold)),
+            title: Row(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Text(outlet, style: TextStyle(fontWeight: FontWeight.bold)),
+                const SizedBox(width: 5),
+                Container(
+                  padding: EdgeInsets.symmetric(vertical: 1, horizontal: 2),
+                  decoration: BoxDecoration(
+                    color: verified ? Colors.green : Colors.red,
+                    borderRadius: BorderRadius.circular(4)
+                  ),
+                  child: Text(verified ? 'Terverifikasi' : 'Belum Verifikasi', style: Get.textTheme.labelSmall!.copyWith(color: Colors.white),),
+                )
+              ],
+            ),
             subtitle: Text(DateFormat('dd/MM/yyyy | HH:mm').format(date)),
             trailing: FilledButton(onPressed: () {}, child: Text(CurrencyFormatter.toRupiah(omset))),
           ),
