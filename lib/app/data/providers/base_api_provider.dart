@@ -1,9 +1,10 @@
 import 'package:get/get.dart';
+import 'package:snpos/app/config/constants.dart';
 
 class BaseApiProvider extends GetConnect {
   @override
   void onInit() {
-    httpClient.baseUrl = 'https://fit-vaguely-sloth.ngrok-free.app/api';
+    httpClient.baseUrl = AppConstants.apiUrl;
     httpClient.defaultContentType = 'application/json';
     httpClient.timeout = const Duration(seconds: 10);
 

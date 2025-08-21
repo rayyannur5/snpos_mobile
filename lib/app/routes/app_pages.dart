@@ -1,6 +1,6 @@
 import 'package:get/get.dart';
-import 'package:snpos/app/modules/main_nav/children/profile/children/maintenance_request/bindings/maintenance_request_binding.dart';
-import 'package:snpos/app/modules/main_nav/children/profile/children/maintenance_request/views/maintenance_request_view.dart';
+import 'package:snpos/app/modules/main_nav/children/profile/children/maintenance_approval/bindings/maintenance_approval_binding.dart';
+import 'package:snpos/app/modules/main_nav/children/profile/children/maintenance_approval/views/maintenance_approval_view.dart';
 
 import '../modules/camera_picker/bindings/camera_picker_binding.dart';
 import '../modules/camera_picker/views/camera_picker_view.dart';
@@ -30,6 +30,10 @@ import '../modules/main_nav/children/profile/children/change_password/bindings/c
 import '../modules/main_nav/children/profile/children/change_password/views/change_password_view.dart';
 import '../modules/main_nav/children/profile/children/deposit_report/bindings/deposit_report_binding.dart';
 import '../modules/main_nav/children/profile/children/deposit_report/views/deposit_report_view.dart';
+import '../modules/main_nav/children/profile/children/maintenance/bindings/maintenance_binding.dart';
+import '../modules/main_nav/children/profile/children/maintenance/views/maintenance_view.dart';
+import '../modules/main_nav/children/profile/children/maintenance_request/bindings/maintenance_request_binding.dart';
+import '../modules/main_nav/children/profile/children/maintenance_request/views/maintenance_request_view.dart';
 import '../modules/main_nav/children/profile/children/overtime_application/bindings/overtime_application_binding.dart';
 import '../modules/main_nav/children/profile/children/overtime_application/views/overtime_application_view.dart';
 import '../modules/main_nav/children/profile/children/sales_report/bindings/sales_report_binding.dart';
@@ -134,6 +138,16 @@ class AppPages {
                   name: _Paths.MAINTENANCE_REQUEST,
                   page: () => const MaintenanceRequestView(),
                   binding: MaintenanceRequestBinding(),
+                ),
+                GetPage(
+                  name: _Paths.MAINTENANCE,
+                  page: () => const MaintenanceView(),
+                  binding: MaintenanceBinding(),
+                ),
+                GetPage(
+                  name: _Paths.MAINTENANCE_APPROVAL,
+                  page: () => const MaintenanceApprovalView(),
+                  binding: MaintenanceApprovalBinding(),
                 ),
               ]),
         ]),

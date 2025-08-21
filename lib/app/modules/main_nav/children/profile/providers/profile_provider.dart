@@ -144,4 +144,18 @@ class ProfileProvider extends BaseApiProvider {
     return createResponse(response);
   }
 
+  Future<Response> getMaintenanceJobs(String token) async {
+    Response response = await get('/maintenance/maintenance_jobs', headers: {'Authorization': 'Bearer $token'});
+    return createResponse(response);
+  }
+
+  Future<Response> submitMaintenance(int id, String token) async {
+    Response response = await post(
+      '/maintenance/assign',
+      { 'id': id },
+      headers: {'Authorization': 'Bearer $token'},
+    );
+    return createResponse(response);
+  }
+
 }
