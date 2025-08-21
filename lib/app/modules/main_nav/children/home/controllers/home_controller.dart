@@ -141,7 +141,6 @@ class HomeController extends GetxController {
     final formKey = GlobalKey<FormState>();
     final selectedPayment = {}.obs;
 
-    print(selectedPayment);
 
     Get.bottomSheet(
       DraggableScrollableSheet(

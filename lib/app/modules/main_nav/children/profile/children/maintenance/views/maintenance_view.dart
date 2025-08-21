@@ -55,7 +55,16 @@ class MaintenanceView extends GetView<MaintenanceController> {
                       highlightColor: Colors.transparent,
                       canTapOnHeader: true,
                       headerBuilder: (BuildContext context, bool isExpanded) {
-                        return ListTile(title: Text(item['item_name']), subtitle: Text(item['outlet_name']),);
+                        return ListTile(
+                          title: Text(item['item_name']),
+                          subtitle: Text(item['outlet_name']),
+                          trailing: Badge(
+                            label: Text(item['started_date'] != null ? "Dikerjakan" : "Belum"),
+                            backgroundColor: item['started_date'] != null
+                                ? Colors.green
+                                : Colors.orange,
+                          ),
+                        );
                       },
                       body: Card(
                         child: Padding(

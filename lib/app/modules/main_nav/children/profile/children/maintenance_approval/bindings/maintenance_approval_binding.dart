@@ -6,7 +6,7 @@ class MaintenanceApprovalBinding extends Bindings {
   @override
   void dependencies() {
     Get.lazyPut<MaintenanceApprovalController>(
-      () => MaintenanceApprovalController(),
+      () => MaintenanceApprovalController(Get.find()),
     );
   }
 }

@@ -40,8 +40,6 @@ class AttendanceController extends GetxController {
     isLoading.value = true;
     errorMessage.value = '';
     var response = await provider.updateUserData(box.read('token'));
-    print(response.statusCode);
-    print(response.body);
     if(response.statusCode == 200) {
       var user = response.body['data'];
       box.write('user', user);

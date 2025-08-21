@@ -158,4 +158,30 @@ class ProfileProvider extends BaseApiProvider {
     return createResponse(response);
   }
 
+  Future<Response> getMaintenanceApprovals(String token) async {
+    Response response = await get('/maintenance/maintenance_approvals', headers: {'Authorization': 'Bearer $token'});
+    return createResponse(response);
+  }
+
+  Future<Response> submitMaintenanceApproval(id, pathPicture, token) async {
+
+    final imageFile = File(pathPicture);
+    final fileName = imageFile.path.split('/').last;
+
+    final data = FormData({
+      'id' : id,
+      'approved_picture' :  MultipartFile(
+        imageFile,
+        filename: fileName,
+      )
+    });
+
+    Response response = await post(
+      '/maintenance/approve',
+      data,
+      headers: {'Authorization': 'Bearer $token'},
+    );
+    return createResponse(response);
+  }
+
 }

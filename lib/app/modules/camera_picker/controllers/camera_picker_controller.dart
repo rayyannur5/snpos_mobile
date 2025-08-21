@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:intl/intl.dart';
 import 'package:path_provider/path_provider.dart';
 
@@ -10,6 +11,8 @@ class CameraPickerController extends GetxController {
   CameraController? cameraController;
   RxBool isCameraInitialized = false.obs;
   RxBool isLoading = false.obs;
+
+  final box = GetStorage();
 
   @override
   void onInit() {
@@ -61,9 +64,11 @@ class CameraPickerController extends GetxController {
 
       isLoading.value = true;
 
+      var user = box.read('user');
+
       final file = await cameraController!.takePicture();
       final appDir = await getApplicationDocumentsDirectory();
-      final String name = 'CAP-${DateFormat('yyyyMMddHHmmss').format(DateTime.now())}.jpg';
+      final String name = 'CAP-${user['id']}-${DateFormat('yyyyMMddHHmmss').format(DateTime.now())}.jpg';
       final savedFile = await File(file.path).copy('${appDir.path}/$name');
 
 
