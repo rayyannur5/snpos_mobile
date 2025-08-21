@@ -28,9 +28,6 @@ class OvertimeApplicationController extends GetxController {
 
   var noteController = TextEditingController();
 
-  var error = false.obs;
-  var messageError = ''.obs;
-
   var loadingButton = false.obs;
 
   final box = GetStorage();

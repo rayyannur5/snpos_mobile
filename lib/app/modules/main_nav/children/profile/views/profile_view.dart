@@ -125,6 +125,21 @@ class ProfileView extends GetView<ProfileController> {
                 borderRadius: BorderRadius.circular(5),
                 child: InkWell(
                   borderRadius: BorderRadius.circular(5),
+                  onTap: () => Get.toNamed(Routes.MAINTENANCE_REQUEST),
+                  child: ListTile(
+                    title: Text('Request Perbaikan', style: TextStyle(fontWeight: FontWeight.bold),),
+                    trailing: Icon(Icons.arrow_forward_ios),
+                  ),
+                ),
+              ),
+            ),
+            Container(
+              margin: EdgeInsets.only(bottom: 10),
+              child: Material(
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(5),
+                child: InkWell(
+                  borderRadius: BorderRadius.circular(5),
                   onTap: () => Get.toNamed(Routes.CHANGE_PASSWORD),
                   child: ListTile(
                     title: Text('Ubah Password', style: TextStyle(fontWeight: FontWeight.bold),),

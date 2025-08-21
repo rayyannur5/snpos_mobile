@@ -63,7 +63,7 @@ class CameraPickerController extends GetxController {
 
       final file = await cameraController!.takePicture();
       final appDir = await getApplicationDocumentsDirectory();
-      final String name = 'CAP_TRX-${DateFormat('yyyyMMddHHmmss').format(DateTime.now())}.jpg';
+      final String name = 'CAP-${DateFormat('yyyyMMddHHmmss').format(DateTime.now())}.jpg';
       final savedFile = await File(file.path).copy('${appDir.path}/$name');
 
 

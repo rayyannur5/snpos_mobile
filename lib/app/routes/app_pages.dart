@@ -1,6 +1,6 @@
 import 'package:get/get.dart';
-import 'package:snpos/app/modules/main_nav/children/profile/children/overtime_application/bindings/overtime_application_binding.dart';
-import 'package:snpos/app/modules/main_nav/children/profile/children/overtime_application/views/overtime_application_view.dart';
+import 'package:snpos/app/modules/main_nav/children/profile/children/maintenance_request/bindings/maintenance_request_binding.dart';
+import 'package:snpos/app/modules/main_nav/children/profile/children/maintenance_request/views/maintenance_request_view.dart';
 
 import '../modules/camera_picker/bindings/camera_picker_binding.dart';
 import '../modules/camera_picker/views/camera_picker_view.dart';
@@ -30,6 +30,8 @@ import '../modules/main_nav/children/profile/children/change_password/bindings/c
 import '../modules/main_nav/children/profile/children/change_password/views/change_password_view.dart';
 import '../modules/main_nav/children/profile/children/deposit_report/bindings/deposit_report_binding.dart';
 import '../modules/main_nav/children/profile/children/deposit_report/views/deposit_report_view.dart';
+import '../modules/main_nav/children/profile/children/overtime_application/bindings/overtime_application_binding.dart';
+import '../modules/main_nav/children/profile/children/overtime_application/views/overtime_application_view.dart';
 import '../modules/main_nav/children/profile/children/sales_report/bindings/sales_report_binding.dart';
 import '../modules/main_nav/children/profile/children/sales_report/views/sales_report_view.dart';
 import '../modules/main_nav/children/profile/children/schedule_information/bindings/schedule_information_binding.dart';
@@ -128,6 +130,11 @@ class AppPages {
                   page: () => const OvertimeApplicationView(),
                   binding: OvertimeApplicationBinding(),
                 ),
+                GetPage(
+                  name: _Paths.MAINTENANCE_REQUEST,
+                  page: () => const MaintenanceRequestView(),
+                  binding: MaintenanceRequestBinding(),
+                ),
               ]),
         ]),
     GetPage(
@@ -140,6 +147,5 @@ class AppPages {
       page: () => const DetailAbsensiView(),
       binding: DetailAbsensiBinding(),
     ),
-
   ];
 }
