@@ -1,11 +1,13 @@
 import 'package:get/get.dart';
-import 'package:snpos/app/modules/main_nav/children/profile/children/maintenance_approval/bindings/maintenance_approval_binding.dart';
-import 'package:snpos/app/modules/main_nav/children/profile/children/maintenance_approval/views/maintenance_approval_view.dart';
+import 'package:snpos/app/modules/item_requests/children/form_item_request/bindings/form_item_request_binding.dart';
+import 'package:snpos/app/modules/item_requests/children/form_item_request/views/form_item_request_view.dart';
 
 import '../modules/camera_picker/bindings/camera_picker_binding.dart';
 import '../modules/camera_picker/views/camera_picker_view.dart';
 import '../modules/detail_absensi/bindings/detail_absensi_binding.dart';
 import '../modules/detail_absensi/views/detail_absensi_view.dart';
+import '../modules/item_requests/bindings/item_requests_binding.dart';
+import '../modules/item_requests/views/item_requests_view.dart';
 import '../modules/landing/bindings/landing_binding.dart';
 import '../modules/landing/views/landing_view.dart';
 import '../modules/login/bindings/login_binding.dart';
@@ -30,10 +32,6 @@ import '../modules/main_nav/children/profile/children/change_password/bindings/c
 import '../modules/main_nav/children/profile/children/change_password/views/change_password_view.dart';
 import '../modules/main_nav/children/profile/children/deposit_report/bindings/deposit_report_binding.dart';
 import '../modules/main_nav/children/profile/children/deposit_report/views/deposit_report_view.dart';
-import '../modules/main_nav/children/profile/children/maintenance/bindings/maintenance_binding.dart';
-import '../modules/main_nav/children/profile/children/maintenance/views/maintenance_view.dart';
-import '../modules/main_nav/children/profile/children/maintenance_request/bindings/maintenance_request_binding.dart';
-import '../modules/main_nav/children/profile/children/maintenance_request/views/maintenance_request_view.dart';
 import '../modules/main_nav/children/profile/children/overtime_application/bindings/overtime_application_binding.dart';
 import '../modules/main_nav/children/profile/children/overtime_application/views/overtime_application_view.dart';
 import '../modules/main_nav/children/profile/children/sales_report/bindings/sales_report_binding.dart';
@@ -42,6 +40,10 @@ import '../modules/main_nav/children/profile/children/schedule_information/bindi
 import '../modules/main_nav/children/profile/children/schedule_information/views/schedule_information_view.dart';
 import '../modules/main_nav/children/profile/views/profile_view.dart';
 import '../modules/main_nav/views/main_nav_view.dart';
+import '../modules/maintenance/bindings/maintenance_binding.dart';
+import '../modules/maintenance/children/maintenance_request/bindings/maintenance_request_binding.dart';
+import '../modules/maintenance/children/maintenance_request/views/maintenance_request_view.dart';
+import '../modules/maintenance/views/maintenance_view.dart';
 
 part 'app_routes.dart';
 
@@ -134,21 +136,6 @@ class AppPages {
                   page: () => const OvertimeApplicationView(),
                   binding: OvertimeApplicationBinding(),
                 ),
-                GetPage(
-                  name: _Paths.MAINTENANCE_REQUEST,
-                  page: () => const MaintenanceRequestView(),
-                  binding: MaintenanceRequestBinding(),
-                ),
-                GetPage(
-                  name: _Paths.MAINTENANCE,
-                  page: () => const MaintenanceView(),
-                  binding: MaintenanceBinding(),
-                ),
-                GetPage(
-                  name: _Paths.MAINTENANCE_APPROVAL,
-                  page: () => const MaintenanceApprovalView(),
-                  binding: MaintenanceApprovalBinding(),
-                ),
               ]),
         ]),
     GetPage(
@@ -161,5 +148,28 @@ class AppPages {
       page: () => const DetailAbsensiView(),
       binding: DetailAbsensiBinding(),
     ),
+    GetPage(
+      name: _Paths.ITEM_REQUESTS,
+      page: () => const ItemRequestsView(),
+      binding: ItemRequestsBinding(),
+      children: [
+        GetPage(
+          name: _Paths.FORM_ITEM_REQUEST,
+          page: () => const FormItemRequestView(),
+          binding: FormItemRequestBinding(),
+        ),
+      ],
+    ),
+    GetPage(
+        name: _Paths.MAINTENANCE,
+        page: () => const MaintenanceView(),
+        binding: MaintenanceBinding(),
+        children: [
+          GetPage(
+            name: _Paths.MAINTENANCE_REQUEST,
+            page: () => const MaintenanceRequestView(),
+            binding: MaintenanceRequestBinding(),
+          ),
+        ]),
   ];
 }

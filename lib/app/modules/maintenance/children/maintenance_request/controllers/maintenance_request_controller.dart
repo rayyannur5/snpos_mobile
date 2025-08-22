@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
-import 'package:snpos/app/modules/main_nav/children/profile/providers/profile_provider.dart';
+import 'package:snpos/app/modules/maintenance/providers/maintenance_provider.dart';
+import 'package:snpos/app/utils/delete_photo.dart';
 
 class MaintenanceRequestController extends GetxController {
-  final ProfileProvider provider;
+  final MaintenanceProvider provider;
   MaintenanceRequestController(this.provider);
 
   var state = {}.obs;
@@ -68,7 +69,7 @@ class MaintenanceRequestController extends GetxController {
 
   Future<void> submitMaintenanceRequest() async {
 
-    if(selectedItem.value == null || selectedOutlet.value == null || noteController.text.isEmpty) {
+    if(selectedItem.value == null || selectedOutlet.value == null || noteController.text.isEmpty || image.value == null) {
       Get.snackbar('Error', 'Semua field harus diisi', backgroundColor: Colors.red, colorText: Colors.white);
       return;
     }
@@ -78,6 +79,7 @@ class MaintenanceRequestController extends GetxController {
     final response = await provider.submitMaintenanceRequest(token, selectedItem.value!, selectedOutlet.value!, noteController.text, image.value);
     if (response.statusCode == 200) {
       loadingButton.value = false;
+      await DeletePhoto.deletePhoto(image.value!);
       Get.back();
     }
     else {

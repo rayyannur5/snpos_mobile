@@ -10,6 +10,7 @@ import 'package:snpos/app/enums/absen_status.dart';
 import 'package:snpos/app/modules/main_nav/children/home/providers/home_provider.dart';
 import 'package:snpos/app/routes/app_pages.dart';
 import 'package:snpos/app/utils/currency_formatter.dart';
+import 'package:snpos/app/utils/delete_photo.dart';
 
 class HomeController extends GetxController {
   final HomeProvider provider;
@@ -259,7 +260,7 @@ class HomeController extends GetxController {
                         if (pathTakePicture.value != '') {
                           return IconButton.outlined(
                             onPressed: () async {
-                              await deletePhoto(pathTakePicture.value);
+                              await DeletePhoto.deletePhoto(pathTakePicture.value);
                               pathTakePicture.value = '';
                             },
                             color: Colors.red,
@@ -502,17 +503,4 @@ class HomeController extends GetxController {
     }
   }
 
-  Future<void> deletePhoto(String filePath) async {
-    final file = File(filePath);
-    if (await file.exists()) {
-      try {
-        await file.delete();
-        print('File berhasil dihapus.');
-      } catch (e) {
-        print('Gagal menghapus file: $e');
-      }
-    } else {
-      print('File tidak ditemukan.');
-    }
-  }
 }

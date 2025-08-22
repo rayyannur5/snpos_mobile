@@ -25,12 +25,15 @@ abstract class Routes {
   static const SCHEDULE_INFORMATION = PROFILE + _Paths.SCHEDULE_INFORMATION;
   static const CHANGE_PASSWORD = PROFILE + _Paths.CHANGE_PASSWORD;
   static const OVERTIME_APPLICATION = PROFILE + _Paths.OVERTIME_APPLICATION;
-  static const MAINTENANCE_REQUEST = PROFILE + _Paths.MAINTENANCE_REQUEST;
-  static const MAINTENANCE = PROFILE + _Paths.MAINTENANCE;
-  static const MAINTENANCE_APPROVAL = PROFILE + _Paths.MAINTENANCE_APPROVAL;
 
   static const CAMERA_PICKER = _Paths.CAMERA_PICKER;
   static const DETAIL_ABSENSI = _Paths.DETAIL_ABSENSI;
+  static const ITEM_REQUESTS = _Paths.ITEM_REQUESTS;
+
+  static const MAINTENANCE = _Paths.MAINTENANCE;
+  static const MAINTENANCE_REQUEST = MAINTENANCE + _Paths.MAINTENANCE_REQUEST;
+  static const FORM_ITEM_REQUEST =
+      _Paths.ITEM_REQUESTS + _Paths.FORM_ITEM_REQUEST;
 }
 
 abstract class _Paths {
@@ -55,5 +58,6 @@ abstract class _Paths {
   static const OVERTIME_APPLICATION = '/overtime-application';
   static const MAINTENANCE_REQUEST = '/maintenance-request';
   static const MAINTENANCE = '/maintenance';
-  static const MAINTENANCE_APPROVAL = '/maintenance-approval';
+  static const ITEM_REQUESTS = '/item-requests';
+  static const FORM_ITEM_REQUEST = '/form-item-request';
 }

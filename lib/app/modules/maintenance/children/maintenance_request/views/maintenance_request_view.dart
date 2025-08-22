@@ -17,10 +17,7 @@ class MaintenanceRequestView extends GetView<MaintenanceRequestController> {
         preferredSize: Size.fromHeight(50),
         child: ClipRRect(
           borderRadius: BorderRadius.only(bottomRight: Radius.circular(20)),
-          child: Hero(
-            tag: 'appbar',
-            child: AppBar(title: Text('Request Perbaikan'), backgroundColor: Get.theme.primaryColor, foregroundColor: Colors.white),
-          ),
+          child: AppBar(title: Text('Request Perbaikan'), backgroundColor: Get.theme.primaryColor, foregroundColor: Colors.white),
         ),
       ),
       floatingActionButton: Padding(

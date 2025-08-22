@@ -15,13 +15,16 @@ class LoginView extends GetView<LoginController> {
         height: Get.height,
         child: Stack(
           children: [
-            Container(
-              height: Get.height / 4,
-              decoration: BoxDecoration(
-                color: Get.theme.primaryColor,
-                borderRadius: BorderRadius.only(
-                  bottomLeft: Radius.circular(50),
-                  bottomRight: Radius.circular(50),
+            Hero(
+              tag: 'landing',
+              child: Container(
+                height: Get.height / 4,
+                decoration: BoxDecoration(
+                  color: Get.theme.primaryColor,
+                  borderRadius: BorderRadius.only(
+                    bottomLeft: Radius.circular(50),
+                    bottomRight: Radius.circular(50),
+                  ),
                 ),
               ),
             ),
