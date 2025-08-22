@@ -53,8 +53,27 @@ class ItemRequestsView extends GetView<ItemRequestsController> {
               itemBuilder: (context, index) {
                 var request = controller.requests[index];
                 return ListTile(
-                  title: Text(request['item_name']),
-                  subtitle: Text(request['outlet_name']),
+                  leading: CircleAvatar(
+                    backgroundColor: _getStatusColor(request['status']).withOpacity(0.2),
+                    child: Icon(_getStatusIcon(request['status']), color: _getStatusColor(request['status'])),
+                  ),
+                  title: Text("${request['item_name']} x${request['qty']}"),
+                  subtitle: Text("Outlet: ${request['outlet_name']}"),
+                  trailing: Container(
+                    padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
+                    decoration: BoxDecoration(
+                      color: _getStatusColor(request['status']).withOpacity(0.15),
+                      borderRadius: BorderRadius.circular(8),
+                      border: Border.all(color: _getStatusColor(request['status'])),
+                    ),
+                    child: Text(
+                      request['status'],
+                      style: TextStyle(
+                        color: _getStatusColor(request['status']),
+                        fontWeight: FontWeight.w600,
+                      ),
+                    ),
+                  ),
                 );
               }
             );
@@ -64,4 +83,27 @@ class ItemRequestsView extends GetView<ItemRequestsController> {
       ),
     );
   }
+
+  Color _getStatusColor(status) {
+    switch (status) {
+      case 'APPROVED':
+        return Colors.blue;
+      case 'ACCEPTED':
+        return Colors.green;
+      default:
+        return Colors.orange;
+    }
+  }
+
+  IconData _getStatusIcon(status) {
+    switch (status) {
+      case 'APPROVED':
+        return Icons.check_circle_outline;
+      case 'ACCEPTED':
+        return Icons.inventory_2_outlined;
+      default:
+        return Icons.hourglass_bottom;
+    }
+  }
+
 }
