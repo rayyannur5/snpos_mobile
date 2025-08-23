@@ -16,4 +16,9 @@ class ItemRequestProvider extends BaseApiProvider {
     Response response = await post('/item_requests/create', {'item_id': item_id, 'outlet_id': outlet_id, 'qty': qty, 'note': note}, headers: {'Authorization': 'Bearer $token'});
     return createResponse(response);
   }
+
+  Future<Response> acceptRequest(token, id) async {
+    Response response = await post('/item_requests/accept', {'id': id}, headers: {'Authorization': 'Bearer $token'});
+    return createResponse(response);
+  }
 }

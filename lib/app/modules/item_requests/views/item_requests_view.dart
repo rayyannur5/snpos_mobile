@@ -59,6 +59,7 @@ class ItemRequestsView extends GetView<ItemRequestsController> {
                   ),
                   title: Text("${request['item_name']} x${request['qty']}"),
                   subtitle: Text("Outlet: ${request['outlet_name']}"),
+                  onTap: request['status'] == 'APPROVED' ? () => controller.dialogAccept(request) : null,
                   trailing: Container(
                     padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
                     decoration: BoxDecoration(
@@ -90,6 +91,8 @@ class ItemRequestsView extends GetView<ItemRequestsController> {
         return Colors.blue;
       case 'ACCEPTED':
         return Colors.green;
+      case 'CANCELED':
+        return Colors.red;
       default:
         return Colors.orange;
     }
@@ -101,6 +104,8 @@ class ItemRequestsView extends GetView<ItemRequestsController> {
         return Icons.check_circle_outline;
       case 'ACCEPTED':
         return Icons.inventory_2_outlined;
+      case 'CANCELED':
+        return Icons.cancel_outlined;
       default:
         return Icons.hourglass_bottom;
     }
