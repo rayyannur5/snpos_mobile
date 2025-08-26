@@ -1,12 +1,16 @@
 import 'package:get/get.dart';
-import 'package:snpos/app/modules/item_requests/children/form_item_request/bindings/form_item_request_binding.dart';
-import 'package:snpos/app/modules/item_requests/children/form_item_request/views/form_item_request_view.dart';
+import 'package:snpos/app/modules/leave_request/bindings/leave_request_binding.dart';
+import 'package:snpos/app/modules/leave_request/children/form_leave_request/bindings/form_leave_request_binding.dart';
+import 'package:snpos/app/modules/leave_request/children/form_leave_request/views/form_leave_request_view.dart';
+import 'package:snpos/app/modules/leave_request/views/leave_request_view.dart';
 
 import '../modules/camera_picker/bindings/camera_picker_binding.dart';
 import '../modules/camera_picker/views/camera_picker_view.dart';
 import '../modules/detail_absensi/bindings/detail_absensi_binding.dart';
 import '../modules/detail_absensi/views/detail_absensi_view.dart';
 import '../modules/item_requests/bindings/item_requests_binding.dart';
+import '../modules/item_requests/children/form_item_request/bindings/form_item_request_binding.dart';
+import '../modules/item_requests/children/form_item_request/views/form_item_request_view.dart';
 import '../modules/item_requests/views/item_requests_view.dart';
 import '../modules/landing/bindings/landing_binding.dart';
 import '../modules/landing/views/landing_view.dart';
@@ -171,5 +175,17 @@ class AppPages {
             binding: MaintenanceRequestBinding(),
           ),
         ]),
+    GetPage(
+      name: _Paths.LEAVE_REQUEST,
+      page: () => const LeaveRequestView(),
+      binding: LeaveRequestBinding(),
+      children: [
+        GetPage(
+          name: _Paths.FORM_LEAVE_REQUEST,
+          page: () => const FormLeaveRequestView(),
+          binding: FormLeaveRequestBinding(),
+        ),
+      ],
+    ),
   ];
 }

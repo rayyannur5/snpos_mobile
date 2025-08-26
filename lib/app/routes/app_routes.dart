@@ -34,6 +34,9 @@ abstract class Routes {
   static const MAINTENANCE_REQUEST = MAINTENANCE + _Paths.MAINTENANCE_REQUEST;
   static const FORM_ITEM_REQUEST =
       _Paths.ITEM_REQUESTS + _Paths.FORM_ITEM_REQUEST;
+  static const LEAVE_REQUEST = _Paths.LEAVE_REQUEST;
+  static const FORM_LEAVE_REQUEST =
+      _Paths.LEAVE_REQUEST + _Paths.FORM_LEAVE_REQUEST;
 }
 
 abstract class _Paths {
@@ -60,4 +63,6 @@ abstract class _Paths {
   static const MAINTENANCE = '/maintenance';
   static const ITEM_REQUESTS = '/item-requests';
   static const FORM_ITEM_REQUEST = '/form-item-request';
+  static const LEAVE_REQUEST = '/absen-request';
+  static const FORM_LEAVE_REQUEST = '/form-absen-request';
 }
