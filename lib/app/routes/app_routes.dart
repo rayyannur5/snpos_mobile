@@ -37,6 +37,7 @@ abstract class Routes {
   static const LEAVE_REQUEST = _Paths.LEAVE_REQUEST;
   static const FORM_LEAVE_REQUEST =
       _Paths.LEAVE_REQUEST + _Paths.FORM_LEAVE_REQUEST;
+  static const DASHBOARD = _Paths.MAIN_NAV + _Paths.DASHBOARD;
 }
 
 abstract class _Paths {
@@ -65,4 +66,5 @@ abstract class _Paths {
   static const FORM_ITEM_REQUEST = '/form-item-request';
   static const LEAVE_REQUEST = '/absen-request';
   static const FORM_LEAVE_REQUEST = '/form-absen-request';
+  static const DASHBOARD = '/dashboard';
 }

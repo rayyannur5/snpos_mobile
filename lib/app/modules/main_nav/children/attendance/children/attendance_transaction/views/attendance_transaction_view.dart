@@ -1,3 +1,4 @@
+import 'dart:ffi';
 import 'dart:io';
 
 import 'package:flutter/material.dart';
@@ -28,11 +29,21 @@ class AttendanceTransactionView extends GetView<AttendanceTransactionController>
             if(controller.user['is_absen'] == 'Y') {
               return FilledButton(onPressed: controller.sendExitAttendance, child: Text('Absen Keluar'));
             }
-            if(controller.schedule.value == null) {
-              return FilledButton(onPressed: null, child: Text('Kirim'));
+
+            if([6,7].contains(controller.user['level'])) {
+              if(controller.schedule.value == null) {
+                return FilledButton(onPressed: null, child: Text('Kirim'));
+              } else {
+                return FilledButton(onPressed: controller.sendAttendance, child: Text('Kirim'));
+              }
+            } else {
+              if(controller.selectedOutlet.value != null && controller.selectedShift.value != null) {
+                return FilledButton(onPressed: controller.sendAttendance, child: Text('Kirim'));
+              } else {
+                return FilledButton(onPressed: null, child: Text('Kirim'));
+              }
             }
 
-            return FilledButton(onPressed: controller.sendAttendance, child: Text('Kirim'));
 
           }),
         ),
@@ -45,7 +56,7 @@ class AttendanceTransactionView extends GetView<AttendanceTransactionController>
           child: ListView(
             children: [
               Container(
-                height: Get.height/5,
+                height: Get.height/6,
                 width: Get.width,
                 padding: EdgeInsets.all(20),
                 decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.circular(15)),
@@ -53,7 +64,7 @@ class AttendanceTransactionView extends GetView<AttendanceTransactionController>
               ),
               const SizedBox(height: 10),
               Container(
-                height: Get.height/5,
+                height: Get.height/7,
                 width: Get.width,
                 padding: EdgeInsets.all(20),
                 decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.vertical(top: Radius.circular(15))),
@@ -92,7 +103,11 @@ class AttendanceTransactionView extends GetView<AttendanceTransactionController>
                         if(controller.user['is_absen'] == 'Y') {
                           return Text('Data Absen Masuk', style: TextStyle(fontWeight: FontWeight.bold));
                         } else {
-                          return Text('Jadwal', style: TextStyle(fontWeight: FontWeight.bold));
+                          if([6,7].contains(controller.user['level'])) {
+                            return Text('Jadwal', style: TextStyle(fontWeight: FontWeight.bold));
+                          } else {
+                            return Text('Outlet', style: TextStyle(fontWeight: FontWeight.bold));
+                          }
                         }
                       }
                     ),
@@ -145,32 +160,90 @@ class AttendanceTransactionView extends GetView<AttendanceTransactionController>
                           ),
                         );
                       }
-                      else if (controller.schedule.value == null) {
+                      else if (controller.schedule.value == null && [6,7].contains(controller.user['level'])) {
                         return Text('Tidak ada jadwal');
                       }
                       else {
-                        var date = DateTime.parse(controller.schedule.value?['date']);
-                        return DataTable(
-                            columnSpacing: 30,
-                            columns: [
-                              DataColumn(label: Text('Tanggal')),
-                              DataColumn(label: Text('Outlet')),
-                              DataColumn(label: Text('Shift')),
-                            ],
-                            rows: [
-                              DataRow(cells: [
-                                DataCell(Text(DateFormat('dd/MM/yyyy').format(date))),
-                                DataCell(Text(controller.schedule.value?['outlet_name'])),
-                                DataCell(Text(controller.schedule.value?['shift_name'])),
-                              ]),
-                            ]
-                        );
+
+                        if([6,7].contains(controller.user['level'])) {
+                          var date = DateTime.parse(controller.schedule.value?['date']);
+                          return DataTable(
+                              columnSpacing: 30,
+                              columns: [
+                                DataColumn(label: Text('Tanggal')),
+                                DataColumn(label: Text('Outlet')),
+                                DataColumn(label: Text('Shift')),
+                              ],
+                              rows: [
+                                DataRow(cells: [
+                                  DataCell(Text(DateFormat('dd/MM/yyyy').format(date))),
+                                  DataCell(Text(controller.schedule.value?['outlet_name'])),
+                                  DataCell(Text(controller.schedule.value?['shift_name'])),
+                                ]),
+                              ]
+                          );
+
+                        } else {
+                          return DropdownButtonFormField(
+                            decoration: InputDecoration(labelText: 'Pilih Outlet'),
+                              items: controller.outlets.map((outlet) {
+                                return DropdownMenuItem(value: outlet['id'], child: Text(outlet['name']));
+                              }).toList(),
+                              onChanged: (value) {
+                                controller.selectedOutlet.value = value as int;
+                              },
+                          );
+                        }
+
                       }
                       return Container();
                     }),
                   ],
                 ),
               ),
+              const SizedBox(height: 10),
+              Obx(() {
+                if(![6,7].contains(controller.user['level'])) {
+                  return Container(
+                    width: Get.width,
+                    padding: EdgeInsets.all(20),
+                    decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.circular(15)),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text('Shift', style: TextStyle(fontWeight: FontWeight.bold)),
+                        const SizedBox(height: 10),
+                        GridView.builder(
+                          shrinkWrap: true, // ukuran menyesuaikan konten
+                          physics: const NeverScrollableScrollPhysics(), // biar nggak scroll ganda
+                          gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                            crossAxisCount: 3, // jumlah kolom
+                            crossAxisSpacing: 8, // jarak horizontal antar item
+                            mainAxisSpacing: 8, // jarak vertikal antar item
+                            childAspectRatio: 3, // perbandingan lebar : tinggi
+                          ),
+                            itemCount: controller.shifts.length,
+                            itemBuilder: (context, index) {
+                              return Obx(() {
+                                var shift = controller.shifts[index];
+                                if(shift['id'] == controller.selectedShift.value) {
+                                  return FilledButton(onPressed: () {}, child: Text(shift['name']));
+                                } else {
+                                  return OutlinedButton(onPressed: () {
+                                    controller.selectedShift.value = shift['id'];
+                                  }, child: Text(shift['name']));
+                                }
+                              });
+                            },
+                        )
+                      ],
+                    ),
+                  );
+                } else {
+                  return SizedBox();
+                }
+              })
+
             ],
           ),
         ),

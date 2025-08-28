@@ -22,6 +22,11 @@ class AttendanceTransactionController extends GetxController {
   var schedule = Rxn<Map<String, dynamic>>();
   var loadingSchedule = false.obs;
 
+  var outlets = [].obs;
+  var selectedOutlet = RxnInt();
+  var shifts = [].obs;
+  var selectedShift = RxnInt();
+
   var isExitAbsen = false.obs;
   var user = {}.obs;
 
@@ -31,7 +36,11 @@ class AttendanceTransactionController extends GetxController {
 
     user.value = box.read('user');
     if(user['is_absen'] != 'Y') {
-      fetchSchedule();
+      if([6,7].contains(user['level'])) {
+        fetchSchedule();
+      } else {
+        fetchOutlets();
+      }
     }
 
     final args = Get.arguments as Map;
@@ -62,6 +71,8 @@ class AttendanceTransactionController extends GetxController {
         namedLocation: namedLocation,
         path: pathFile,
         token: token,
+        outletId: selectedOutlet.value,
+        shiftId: selectedShift.value,
       );
 
       if(response.statusCode == 200) {
@@ -133,6 +144,20 @@ class AttendanceTransactionController extends GetxController {
     loadingSchedule.value = false;
     if(response.statusCode == 200) {
       schedule.value = response.body['data'];
+    } else {
+      Get.snackbar('Gagal mengambil jadwal', response.body['message'], backgroundColor: Colors.red, colorText: Colors.white);
+    }
+  }
+
+  Future<void> fetchOutlets() async {
+    loadingSchedule.value = true;
+    String token = box.read('token');
+    var response = await provider.fetchOutlets(token);
+    loadingSchedule.value = false;
+    if(response.statusCode == 200) {
+      print(response.body);
+      outlets.value = response.body['data']['outlets'];
+      shifts.value = response.body['data']['shifts'];
     } else {
       Get.snackbar('Gagal mengambil jadwal', response.body['message'], backgroundColor: Colors.red, colorText: Colors.white);
     }

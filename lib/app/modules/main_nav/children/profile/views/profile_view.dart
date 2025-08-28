@@ -50,21 +50,6 @@ class ProfileView extends GetView<ProfileController> {
                 borderRadius: BorderRadius.circular(5),
                 child: InkWell(
                   borderRadius: BorderRadius.circular(5),
-                  onTap: () => Get.toNamed(Routes.SALES_REPORT),
-                  child: ListTile(
-                    title: Text('Laporan Penjualan', style: TextStyle(fontWeight: FontWeight.bold),),
-                    trailing: Icon(Icons.arrow_forward_ios),
-                  ),
-                ),
-              ),
-            ),
-            Container(
-              margin: EdgeInsets.only(bottom: 10),
-              child: Material(
-                color: Colors.white,
-                borderRadius: BorderRadius.circular(5),
-                child: InkWell(
-                  borderRadius: BorderRadius.circular(5),
                   onTap: () => Get.toNamed(Routes.ATTENDANCE_REPORT),
                   child: ListTile(
                     title: Text('Laporan Absensi', style: TextStyle(fontWeight: FontWeight.bold),),
@@ -73,96 +58,115 @@ class ProfileView extends GetView<ProfileController> {
                 ),
               ),
             ),
-            Container(
-              margin: EdgeInsets.only(bottom: 10),
-              child: Material(
-                color: Colors.white,
-                borderRadius: BorderRadius.circular(5),
-                child: InkWell(
-                  borderRadius: BorderRadius.circular(5),
-                  onTap: () => Get.toNamed(Routes.DEPOSIT_REPORT),
-                  child: ListTile(
-                    title: Text('Laporan Setoran', style: TextStyle(fontWeight: FontWeight.bold),),
-                    trailing: Icon(Icons.arrow_forward_ios),
+
+            if([6,7].contains(controller.user['level']))
+              ...[
+                Container(
+                  margin: EdgeInsets.only(bottom: 10),
+                  child: Material(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(5),
+                    child: InkWell(
+                      borderRadius: BorderRadius.circular(5),
+                      onTap: () => Get.toNamed(Routes.SALES_REPORT),
+                      child: ListTile(
+                        title: Text('Laporan Penjualan', style: TextStyle(fontWeight: FontWeight.bold),),
+                        trailing: Icon(Icons.arrow_forward_ios),
+                      ),
+                    ),
                   ),
                 ),
-              ),
-            ),
-            Container(
-              margin: EdgeInsets.only(bottom: 10),
-              child: Material(
-                color: Colors.white,
-                borderRadius: BorderRadius.circular(5),
-                child: InkWell(
-                  borderRadius: BorderRadius.circular(5),
-                  onTap: () => Get.toNamed(Routes.SCHEDULE_INFORMATION),
-                  child: ListTile(
-                    title: Text('Informasi Jadwal', style: TextStyle(fontWeight: FontWeight.bold),),
-                    trailing: Icon(Icons.arrow_forward_ios),
+                Container(
+                  margin: EdgeInsets.only(bottom: 10),
+                  child: Material(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(5),
+                    child: InkWell(
+                      borderRadius: BorderRadius.circular(5),
+                      onTap: () => Get.toNamed(Routes.DEPOSIT_REPORT),
+                      child: ListTile(
+                        title: Text('Laporan Setoran', style: TextStyle(fontWeight: FontWeight.bold),),
+                        trailing: Icon(Icons.arrow_forward_ios),
+                      ),
+                    ),
                   ),
                 ),
-              ),
-            ),
-            Container(
-              margin: EdgeInsets.only(bottom: 10),
-              child: Material(
-                color: Colors.white,
-                borderRadius: BorderRadius.circular(5),
-                child: InkWell(
-                  borderRadius: BorderRadius.circular(5),
-                  onTap: () => Get.toNamed(Routes.OVERTIME_APPLICATION),
-                  child: ListTile(
-                    title: Text('Pengajuan Lembur', style: TextStyle(fontWeight: FontWeight.bold),),
-                    trailing: Icon(Icons.arrow_forward_ios),
+                Container(
+                  margin: EdgeInsets.only(bottom: 10),
+                  child: Material(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(5),
+                    child: InkWell(
+                      borderRadius: BorderRadius.circular(5),
+                      onTap: () => Get.toNamed(Routes.SCHEDULE_INFORMATION),
+                      child: ListTile(
+                        title: Text('Informasi Jadwal', style: TextStyle(fontWeight: FontWeight.bold),),
+                        trailing: Icon(Icons.arrow_forward_ios),
+                      ),
+                    ),
                   ),
                 ),
-              ),
-            ),
-            Container(
-              margin: EdgeInsets.only(bottom: 10),
-              child: Material(
-                color: Colors.white,
-                borderRadius: BorderRadius.circular(5),
-                child: InkWell(
-                  borderRadius: BorderRadius.circular(5),
-                  onTap: () => Get.toNamed(Routes.MAINTENANCE),
-                  child: ListTile(
-                    title: Text('Perbaikan', style: TextStyle(fontWeight: FontWeight.bold),),
-                    trailing: Icon(Icons.arrow_forward_ios),
+                Container(
+                  margin: EdgeInsets.only(bottom: 10),
+                  child: Material(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(5),
+                    child: InkWell(
+                      borderRadius: BorderRadius.circular(5),
+                      onTap: () => Get.toNamed(Routes.OVERTIME_APPLICATION),
+                      child: ListTile(
+                        title: Text('Pengajuan Lembur', style: TextStyle(fontWeight: FontWeight.bold),),
+                        trailing: Icon(Icons.arrow_forward_ios),
+                      ),
+                    ),
                   ),
                 ),
-              ),
-            ),
-            Container(
-              margin: EdgeInsets.only(bottom: 10),
-              child: Material(
-                color: Colors.white,
-                borderRadius: BorderRadius.circular(5),
-                child: InkWell(
-                  borderRadius: BorderRadius.circular(5),
-                  onTap: () => Get.toNamed(Routes.ITEM_REQUESTS),
-                  child: ListTile(
-                    title: Text('Permintaan Barang', style: TextStyle(fontWeight: FontWeight.bold),),
-                    trailing: Icon(Icons.arrow_forward_ios),
+                Container(
+                  margin: EdgeInsets.only(bottom: 10),
+                  child: Material(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(5),
+                    child: InkWell(
+                      borderRadius: BorderRadius.circular(5),
+                      onTap: () => Get.toNamed(Routes.MAINTENANCE),
+                      child: ListTile(
+                        title: Text('Perbaikan', style: TextStyle(fontWeight: FontWeight.bold),),
+                        trailing: Icon(Icons.arrow_forward_ios),
+                      ),
+                    ),
                   ),
                 ),
-              ),
-            ),
-            Container(
-              margin: EdgeInsets.only(bottom: 10),
-              child: Material(
-                color: Colors.white,
-                borderRadius: BorderRadius.circular(5),
-                child: InkWell(
-                  borderRadius: BorderRadius.circular(5),
-                  onTap: () => Get.toNamed(Routes.LEAVE_REQUEST),
-                  child: ListTile(
-                    title: Text('Pengajuan Ijin', style: TextStyle(fontWeight: FontWeight.bold),),
-                    trailing: Icon(Icons.arrow_forward_ios),
+                Container(
+                  margin: EdgeInsets.only(bottom: 10),
+                  child: Material(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(5),
+                    child: InkWell(
+                      borderRadius: BorderRadius.circular(5),
+                      onTap: () => Get.toNamed(Routes.ITEM_REQUESTS),
+                      child: ListTile(
+                        title: Text('Permintaan Barang', style: TextStyle(fontWeight: FontWeight.bold),),
+                        trailing: Icon(Icons.arrow_forward_ios),
+                      ),
+                    ),
                   ),
                 ),
-              ),
-            ),
+                Container(
+                  margin: EdgeInsets.only(bottom: 10),
+                  child: Material(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(5),
+                    child: InkWell(
+                      borderRadius: BorderRadius.circular(5),
+                      onTap: () => Get.toNamed(Routes.LEAVE_REQUEST),
+                      child: ListTile(
+                        title: Text('Pengajuan Ijin', style: TextStyle(fontWeight: FontWeight.bold),),
+                        trailing: Icon(Icons.arrow_forward_ios),
+                      ),
+                    ),
+                  ),
+                ),
+              ],
             Container(
               margin: EdgeInsets.only(bottom: 10),
               child: Material(

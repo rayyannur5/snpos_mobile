@@ -13,6 +13,14 @@ class AttendanceProvider extends BaseApiProvider {
     return createResponse(response);
   }
 
+  Future<Response> fetchOutlets(String token) async {
+    Response response = await get(
+      '/attendance/outlets',
+      headers: {'Authorization': 'Bearer $token'},
+    );
+    return createResponse(response);
+  }
+
   Future<Response> updateUserData(String token) async {
     Response response = await get(
       '/attendance',
@@ -28,6 +36,8 @@ class AttendanceProvider extends BaseApiProvider {
     namedLocation,
     path,
     token,
+    outletId,
+    shiftId
   }) async {
     final imageFile = File(path); // ambil file dari path
     final fileName = imageFile.path.split('/').last; // nama file
@@ -37,6 +47,8 @@ class AttendanceProvider extends BaseApiProvider {
       'latitude': latitude,
       'longitude': longitude,
       'namedLocation': namedLocation,
+      'outletId': outletId,
+      'shiftId': shiftId,
       'photo': MultipartFile(
         imageFile,
         filename: fileName,

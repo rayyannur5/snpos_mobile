@@ -9,6 +9,8 @@ class ChangePasswordController extends GetxController {
   ChangePasswordController(this.provider);
   final ProfileProvider provider;
 
+  late var user;
+
   var hidden_password_old = true.obs;
   var hidden_password_new = true.obs;
   var hidden_password_new_2 = true.obs;
@@ -28,6 +30,9 @@ class ChangePasswordController extends GetxController {
   @override
   void onInit() {
     super.onInit();
+
+    user = box.read('user');
+
   }
 
   @override

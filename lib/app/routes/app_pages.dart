@@ -1,8 +1,6 @@
 import 'package:get/get.dart';
-import 'package:snpos/app/modules/leave_request/bindings/leave_request_binding.dart';
-import 'package:snpos/app/modules/leave_request/children/form_leave_request/bindings/form_leave_request_binding.dart';
-import 'package:snpos/app/modules/leave_request/children/form_leave_request/views/form_leave_request_view.dart';
-import 'package:snpos/app/modules/leave_request/views/leave_request_view.dart';
+import 'package:snpos/app/modules/main_nav/children/dashboard/bindings/dashboard_binding.dart';
+import 'package:snpos/app/modules/main_nav/children/dashboard/views/dashboard_view.dart';
 
 import '../modules/camera_picker/bindings/camera_picker_binding.dart';
 import '../modules/camera_picker/views/camera_picker_view.dart';
@@ -14,6 +12,10 @@ import '../modules/item_requests/children/form_item_request/views/form_item_requ
 import '../modules/item_requests/views/item_requests_view.dart';
 import '../modules/landing/bindings/landing_binding.dart';
 import '../modules/landing/views/landing_view.dart';
+import '../modules/leave_request/bindings/leave_request_binding.dart';
+import '../modules/leave_request/children/form_leave_request/bindings/form_leave_request_binding.dart';
+import '../modules/leave_request/children/form_leave_request/views/form_leave_request_view.dart';
+import '../modules/leave_request/views/leave_request_view.dart';
 import '../modules/login/bindings/login_binding.dart';
 import '../modules/login/views/login_view.dart';
 import '../modules/main_nav/bindings/main_nav_binding.dart';
@@ -161,6 +163,11 @@ class AppPages {
           name: _Paths.FORM_ITEM_REQUEST,
           page: () => const FormItemRequestView(),
           binding: FormItemRequestBinding(),
+        ),
+        GetPage(
+          name: _Paths.DASHBOARD,
+          page: () => const DashboardView(),
+          binding: DashboardBinding(),
         ),
       ],
     ),

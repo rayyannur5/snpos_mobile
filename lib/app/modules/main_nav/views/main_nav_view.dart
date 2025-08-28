@@ -17,11 +17,7 @@ class MainNavView extends GetView<MainNavController> {
 
           body: IndexedStack(
             index: controller.currentIndex.value,
-            children: const [
-              HomeView(),
-              AttendanceView(),
-              ProfileView(),
-            ],
+            children: controller.menus,
           ),
           floatingActionButton: FloatingActionButton(
             onPressed: () => controller.changeTab(1), // tengah = Absensi

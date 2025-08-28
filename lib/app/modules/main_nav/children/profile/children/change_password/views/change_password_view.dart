@@ -40,11 +40,11 @@ class ChangePasswordView extends GetView<ChangePasswordController> {
             child: Column(
 
               children: [
-                TextField(enabled: false, controller: TextEditingController(text: 'Rayyan Nur Fauzan'), decoration: InputDecoration(labelText: 'Nama')),
+                TextField(enabled: false, controller: TextEditingController(text: controller.user['name']), decoration: InputDecoration(labelText: 'Nama')),
                 const SizedBox(height: 20),
-                TextField(enabled: false, controller: TextEditingController(text: 'rayyannur5'), decoration: InputDecoration(labelText: 'Username')),
+                TextField(enabled: false, controller: TextEditingController(text: controller.user['username']), decoration: InputDecoration(labelText: 'Username')),
                 const SizedBox(height: 20),
-                TextField(enabled: false, controller: TextEditingController(text: 'rayyannur5@gmail.com'), decoration: InputDecoration(labelText: 'Email address')),
+                TextField(enabled: false, controller: TextEditingController(text: controller.user['email']), decoration: InputDecoration(labelText: 'Email address')),
                 const SizedBox(height: 20),
                 Obx(() {
                   return TextFormField(
