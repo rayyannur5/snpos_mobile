@@ -27,6 +27,8 @@ class AttendanceTransactionController extends GetxController {
   var shifts = [].obs;
   var selectedShift = RxnInt();
 
+  var inRadius = false.obs;
+
   var isExitAbsen = false.obs;
   var user = {}.obs;
 
@@ -144,6 +146,22 @@ class AttendanceTransactionController extends GetxController {
     loadingSchedule.value = false;
     if(response.statusCode == 200) {
       schedule.value = response.body['data'];
+
+      if(schedule.value != null) {
+        var distance = Geolocator.distanceBetween(location.latitude, location.longitude, schedule.value?['latitude'], schedule.value?['longitude']);
+
+        print("distance : $distance");
+
+        if (distance > (schedule.value!['allowance_radius'] * 1000)) {
+          Get.snackbar('Diluar Radius', 'Ambil absen lagi di dekat outlet yang sudah ditetapkan', backgroundColor: Colors.red, colorText: Colors.white);
+          inRadius.value = false;
+        } else {
+          inRadius.value = true;
+        }
+      }
+
+
+
     } else {
       Get.snackbar('Gagal mengambil jadwal', response.body['message'], backgroundColor: Colors.red, colorText: Colors.white);
     }
